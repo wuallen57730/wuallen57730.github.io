@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "COMP 3111": 4,
     "MATH 1012": 4,
     "ELEC 2600": 4,
+    "COMP 4981": 6,
   };
 
   let totalPoints = 0;
