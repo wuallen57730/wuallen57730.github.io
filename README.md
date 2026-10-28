@@ -40,19 +40,10 @@ Add or change an `<article class="entry">` in `index.html`:
 
 - `data-kind`: `research`, `oss`, `work`, `edu`, `award`, `project` or `other`.
 - One `<time>` is a point in time; two are a start and end; `data-ongoing` means "Present".
-- Commit subjects use the `[Tag] message` style, e.g. `[Research] Agentic RL on AReaL 2.0` or `[Award] …`; the full entry appears in `git show`.
 - Add `data-commit="message"` (and optionally `data-date="YYYY-MM"`) to a bullet to give it
-  its own commit on the branch (e.g. the TAIONE fellowship on `oss/kuberay`, Oct 2026).
+  its own commit on the branch.
 
-## Preview
-
-Open `index.html` directly, or run `python -m http.server 8000` in this folder.
-
-## SEO
-
-Canonical URL, Open Graph / Twitter cards, `ProfilePage` + `Person` + `WebSite` JSON-LD,
-`sitemap.xml` and `robots.txt` all point to the URL above. Update them together if the site
-moves, and bump `<lastmod>` in `sitemap.xml` after meaningful content changes.
+To preview, open `index.html` directly or run `python -m http.server 8000` in this folder.
 
 ## License
 
