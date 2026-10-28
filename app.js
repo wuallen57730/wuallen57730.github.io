@@ -268,7 +268,7 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
       <p class="sha-line"><span class="kw">commit</span> <span class="sha">${c.sha}</span>${refs}</p>
       ${merge}
       <p><span class="kw">Author:</span> Lima Wu &lt;ywugd@connect.ust.hk&gt;</p>
-      <p><span class="kw">Date:</span>   ${esc(e.when)}</p>
+      <p><span class="kw">Date:</span>   ${esc(c.bullet != null && e.bullets[c.bullet].date ? fmtMonth(toMonth(e.bullets[c.bullet].date)) : e.when)}</p>
       <div class="msg">
         <p class="msg-subject">${esc(c.subject)}</p>
         <h3>${e.titleHTML}</h3>
