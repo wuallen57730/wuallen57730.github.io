@@ -1,1 +1,9 @@
 selfie2.jpeg
+
+# Personal notes and backups — never committed
+local-notes/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.vscode/

@@ -1,1144 +1,462 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Personal webpage of Lima Wu, a Computer Science student at HKUST."
-    />
-    <title>Lima WU | Personal Web Page</title>
-    <link href="./style.css" rel="stylesheet" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <!-- KaTeX for LaTeX rendering -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
-    />
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
-    ></script>
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-      onload="
-        renderMathInElement(document.body, {
-          delimiters: [
-            { left: '$$', right: '$$', display: true },
-            { left: '$', right: '$', display: false },
-          ],
-        })
-      "
-    ></script>
-  </head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yu-Chen (Lima) WU (吳禹辰) | HKUST Computer Science</title>
+  <meta name="description" content="Yu-Chen (Lima) WU (吳禹辰; Lima Wu) is a Computer Science undergraduate at HKUST working on ML systems and AI infrastructure: agentic RL on AReaL and open source on Ray / KubeRay.">
+  <meta name="author" content="Yu-Chen (Lima) WU">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0e1014">
+  <link rel="canonical" href="https://wuallen57730.github.io/limaWU-website/">
+  <link rel="sitemap" type="application/xml" href="sitemap.xml">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Yu-Chen (Lima) WU (吳禹辰) | HKUST Computer Science">
+  <meta property="og:description" content="Yu-Chen (Lima) WU (吳禹辰), Computer Science undergraduate at HKUST. ML systems and AI infrastructure: agentic RL on AReaL, open source on Ray / KubeRay.">
+  <meta property="og:url" content="https://wuallen57730.github.io/limaWU-website/">
+  <meta property="og:site_name" content="Lima Wu">
+  <meta property="og:image" content="https://wuallen57730.github.io/limaWU-website/assets/lima-wu.jpg">
+  <meta property="og:image:alt" content="Portrait of Yu-Chen (Lima) WU (吳禹辰)">
+  <meta property="profile:first_name" content="Yu-Chen">
+  <meta property="profile:last_name" content="Wu">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Yu-Chen (Lima) WU (吳禹辰) | HKUST Computer Science">
+  <meta name="twitter:description" content="Computer Science undergraduate at HKUST working on ML systems and AI infrastructure.">
+  <meta name="twitter:image" content="https://wuallen57730.github.io/limaWU-website/assets/lima-wu.jpg">
+  <meta name="twitter:image:alt" content="Portrait of Yu-Chen (Lima) WU (吳禹辰)">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "@id": "https://wuallen57730.github.io/limaWU-website/#profile",
+    "url": "https://wuallen57730.github.io/limaWU-website/",
+    "name": "Yu-Chen (Lima) WU (吳禹辰) | HKUST Computer Science",
+    "description": "Personal homepage of Yu-Chen (Lima) WU, a Computer Science undergraduate at HKUST working on ML systems and AI infrastructure.",
+    "inLanguage": "en",
+    "mainEntity": {
+      "@type": "Person",
+      "@id": "https://wuallen57730.github.io/limaWU-website/#person",
+      "name": "Yu-Chen Wu",
+      "alternateName": ["Lima Wu", "Yu-Chen (Lima) WU", "Wu Yu-Chen", "吳禹辰"],
+      "givenName": "Yu-Chen",
+      "familyName": "Wu",
+      "url": "https://wuallen57730.github.io/limaWU-website/",
+      "image": "https://wuallen57730.github.io/limaWU-website/assets/lima-wu.jpg",
+      "email": "mailto:ywugd@connect.ust.hk",
+      "description": "Computer Science undergraduate at The Hong Kong University of Science and Technology (HKUST).",
+      "affiliation": {
+        "@type": "CollegeOrUniversity",
+        "name": "The Hong Kong University of Science and Technology",
+        "alternateName": "HKUST",
+        "url": "https://hkust.edu.hk/"
+      },
+      "knowsAbout": ["Machine learning systems", "AI infrastructure", "Reinforcement learning", "Ray", "Kubernetes", "Large language models"],
+      "sameAs": [
+        "https://github.com/wuallen57730",
+        "https://www.linkedin.com/in/lima-wu-301578269/"
+      ]
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://wuallen57730.github.io/limaWU-website/#website",
+    "url": "https://wuallen57730.github.io/limaWU-website/",
+    "name": "Lima Wu",
+    "alternateName": ["Yu-Chen Wu", "吳禹辰"],
+    "inLanguage": "en",
+    "publisher": {"@id": "https://wuallen57730.github.io/limaWU-website/#person"}
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2311845b'/%3E%3Cpath d='M11 8v16M11 19c0-5 10-3 10-9' stroke='white' stroke-width='2.5' fill='none'/%3E%3Ccircle cx='11' cy='8' r='3' fill='white'/%3E%3Ccircle cx='11' cy='24' r='3' fill='white'/%3E%3Ccircle cx='21' cy='9' r='3' fill='white'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    try {
+      var t = localStorage.getItem("gitlog-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <p class="prompt">
+        <span class="p-user">lima@hkust</span>:<span class="p-path">~/lima-wu</span>
+        <span class="p-branch">(main)</span> $ <span class="p-cmd">git log --graph --all --decorate</span>
+      </p>
+      <div class="actions">
+        <button type="button" id="view-toggle">plain view</button>
+        <button type="button" id="theme-toggle" aria-label="Toggle light or dark theme">◐</button>
+      </div>
+    </header>
 
-  <body>
-    <div class="rectangle"></div>
-    <!-- 側邊導航欄 -->
-    <aside class="sidebar-nav">
-      <nav class="nav-links">
-        <a href="#education" class="nav-link">Education</a>
-        <a href="#experience" class="nav-link">Experience</a>
-        <a href="#research" class="nav-link">Research</a>
-        <a href="#awards" class="nav-link">Honors & Awards</a>
-        <a href="#skills" class="nav-link">Skills</a>
-        <a href="#courses" class="nav-link">Coursework</a>
-        <a href="#projects" class="nav-link">Projects</a>
-        <a href="#other" class="nav-link">Other & Hobbies</a>
+    <!--
+      CONTENT — the single source of truth for this page.
+      Every view reads the .entry articles below; edit text here, not in app.js.
+      Same block is used by all four prototypes (gitlog / trace / nvsmi / ray).
+      data-after / data-output are only drawn by the ray version (dependency graph).
+    -->
+    <main id="content">
+      <nav class="toc" aria-label="On this page">
+        <p class="toc-h">On this page</p>
+        <ol>
+          <li><a href="#about">About</a></li>
+          <li><a href="#research">Research</a></li>
+          <li><a href="#open-source">Open Source</a></li>
+          <li><a href="#industry">Industry</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#awards">Honors &amp; Awards</a></li>
+          <li><a href="#community">Community</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#coursework">Coursework</a></li>
+        </ol>
       </nav>
-    </aside>
 
-    <!-- 深色模式切換按鈕 -->
-    <button
-      id="theme-toggle"
-      class="social-icon"
-      aria-label="Toggle Dark Mode"
-      style="margin-left: 10px; background: none; border: none; cursor: pointer"
-    >
-      <i class="fa-solid fa-moon"></i>
-      <!-- 初始為月亮圖示，表示切到深色 -->
-    </button>
+      <header class="profile" id="about">
+        <h1>Yu-Chen (Lima) WU <span lang="zh-Hant">吳禹辰</span></h1>
+        <p class="lede">
+          BEng in Computer Science at HKUST ('27). Currently doing agentic RL
+          on AReaL 2.0 and open source on Ray / KubeRay.
+        </p>
+        <ul class="links">
+          <li><a href="mailto:ywugd@connect.ust.hk">ywugd@connect.ust.hk</a></li>
+          <li><a href="https://github.com/wuallen57730">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/lima-wu-301578269/">LinkedIn</a></li>
+          <li><a href="https://www.chess.com/member/allenalvin">Chess.com</a></li>
+          <li>HKUST, Hong Kong SAR</li>
+        </ul>
+      </header>
 
-    <img src="selfie1.jpg" class="profile-img" alt="Portrait of Lima Wu" />
+      <section class="view" id="log-view" aria-label="Experience as a git history">
+        <div class="filters" id="filters" role="toolbar" aria-label="Filter by branch type"></div>
+        <div class="log-layout">
+          <div class="log" id="log"></div>
+          <aside class="show" id="show" aria-live="polite"></aside>
+        </div>
+        <p class="hint">click a commit for <code>git show</code> · <kbd>j</kbd>/<kbd>k</kbd> to move</p>
+      </section>
 
-    <h1 class="title">YU-CHEN (Lima) WU | 吳禹辰</h1>
-    <div class="code contact-info">BEng in Computer Science, HKUST '27</div>
-    <div class="code contact-info">
-      <a
-        class="social-icon"
-        aria-label="Location of HKUST"
-        target="_blank"
-        href="https://www.google.com.hk/maps/place/香港科技大学/@22.3654989,113.96696,11.08z/data=!4m6!3m5!1s0x3404046bc19c7e15:0x2bedd58f9cf841be!8m2!3d22.3374847!4d114.2633989!16zL20vMDFucHYz?entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D"
-      >
-        <i class="fa-solid fa-globe"></i
-      ></a>
-      HKUST, Hong Kong SAR
-    </div>
-    <div class="code contact-info">
-      <i class="fa-solid fa-envelope"></i> ywugd@connect.ust.hk
-    </div>
-    <div class="code contact-info">
-      <i class="fa-solid fa-phone"></i> +852 57348495
-    </div>
-    <div class="code contact-info">
-      <i class="fa-solid fa-phone" style="visibility: hidden"></i> +886
-      905928119
-    </div>
+      <section class="timeline-section" id="research">
+        <h2>Research</h2>
 
-    <div class="contact-info">
-      <a
-        href="https://github.com/wuallen57730"
-        target="_blank"
-        class="social-icon"
-        aria-label="GitHub"
-      >
-        <i class="fa-brands fa-square-github"></i>
-      </a>
+        <article class="entry" data-id="areal" data-kind="research" data-ongoing data-after="urop-llm" data-output="PR #1567">
+          <h3>Agentic RL on AReaL 2.0</h3>
+          <p class="when"><time datetime="2026-08">Aug 2026</time> – Present</p>
+          <p class="meta">Undergraduate Research, supervised by <a href="https://binhangyuan.github.io/site/">Prof. Binhang YUAN</a></p>
+          <p class="where">HKUST CSE</p>
+          <ul>
+            <li data-short="integrate executable-world agent into AReaL">
+              Integrated a Code-as-World-style executable-world discovery agent
+              into AReaL 2.0's agent-service architecture (external-model, online
+              mode). An LLM writes a physical world specification, which is
+              compiled to MuJoCo, simulated, and checked against observations,
+              with up to 5 rounds of residual feedback to revise it.
+            </li>
+            <li data-short="rollout driver + parity check (7% → 37%)">
+              Built the rollout driver, the session/reward interface (binary
+              verifier reward), and a turn-by-turn parity check against
+              AReaL-stored trajectories. In a Qwen3-Coder pilot,
+              <strong>30/30</strong> trajectories passed the parity check, and
+              multi-turn revision raised task success from <strong>7%</strong>
+              to <strong>37%</strong>.
+            </li>
+            <li data-short="docs: Ray scheduler support (#1567)">
+              Clarified Ray scheduler support in the agent workflow compatibility
+              notes (<a href="https://github.com/areal-project/AReaL/pull/1567">#1567</a>).
+              See <a href="https://github.com/areal-project/AReaL/pulls?q=is%3Apr+author%3Awuallen57730">my contributions</a>.
+            </li>
+          </ul>
+          <p class="tags">MuJoCo, Ray, Qwen3-Coder</p>
+        </article>
 
-      <a href="#" target="_blank" class="social-icon" aria-label="Instagram">
-        <i class="fa-brands fa-square-instagram"></i>
-      </a>
+        <article class="entry" data-id="so-arm" data-kind="research">
+          <h3>Robotic Manipulation System on SO-ARM101</h3>
+          <p class="when"><time datetime="2026-08">Aug 2026</time> – <time datetime="2027-05">May 2027</time></p>
+          <p class="meta">Final Year Project, supervised by Dr. Tsz Him CHEUNG</p>
+          <p class="where">HKUST CSE</p>
+          <ul>
+            <li data-short="LeRobot stack: teleop data → policy → robot">
+              Building an end-to-end manipulation stack on the SO-ARM101 arm with
+              LeRobot, covering teleoperated data collection, policy training,
+              and on-robot deployment.
+            </li>
+          </ul>
+          <p class="tags">LeRobot</p>
+        </article>
 
-      <a
-        href="https://www.linkedin.com/in/lima-wu-301578269/"
-        target="_blank"
-        class="social-icon"
-        aria-label="LinkedIn"
-      >
-        <i class="fa-brands fa-linkedin"></i>
-      </a>
-    </div>
+        <article class="entry" data-id="urop-llm" data-kind="research" data-after="mobibox" data-output="on-device LLM agents">
+          <h3>Accelerating LLM Inference on Resource-Constrained Devices</h3>
+          <p class="when"><time datetime="2025-09">Sep 2025</time> – <time datetime="2025-12">Dec 2025</time></p>
+          <p class="meta">Undergraduate Research Assistant (UROP), supervised by <a href="https://xmouyang.github.io/">Prof. Xiaomin OUYANG</a></p>
+          <p class="where">HKUST CSE</p>
+          <ul>
+            <li data-short="GUI LLM agents on mobile hardware">
+              Investigated GUI-capable LLM agents on resource-constrained mobile
+              hardware, collaborating closely with a PhD mentor.
+            </li>
+          </ul>
+        </article>
 
-    <h2 class="subtitle" id="education"><strong>Education</strong></h2>
+        <article class="entry" data-id="mobibox" data-kind="research" data-output="MobiBox app">
+          <h3>LLM-Assisted Multimodal Sensing on Mobile Devices</h3>
+          <p class="when"><time datetime="2025-02">Feb 2025</time> – <time datetime="2025-06">Jun 2025</time></p>
+          <p class="meta">Undergraduate Research Assistant (UROP), supervised by <a href="https://xmouyang.github.io/">Prof. Xiaomin OUYANG</a></p>
+          <p class="where">HKUST CSE</p>
+          <ul>
+            <li data-short="MobiBox Android app">
+              Built the <strong>MobiBox</strong> Android app to run multimodal
+              sensing workflows for smartphone-based activity analysis.
+            </li>
+            <li data-short="fix on-device data collection">
+              Addressed front-end debugging and on-device data collection issues
+              to stabilize field deployments.
+            </li>
+          </ul>
+          <p class="tags">Android</p>
+        </article>
+      </section>
 
-    <div class="timeline-item">
-      <span class="text"
-        >The Hong Kong University of Science and Technology (HKUST)</span
-      >
-      <span class="code date">Sep 2023 - Jun 2027 (Pursuing)</span>
-    </div>
-    <div class="code" style="padding-left: 15px; padding-bottom: 5px">
-      BEng in Computer Science, with an Extended Major in Artificial
-      Intelligence and a Minor in Mathematics
-    </div>
+      <section class="timeline-section" id="open-source">
+        <h2>Open Source</h2>
 
-    <div class="timeline-item">
-      <span class="text"
-        >The Affiliated Senior High School of National Taiwan Normal University
-        (HSNU)</span
-      >
-      <span class="code date">Sep 2020 - Jun 2023</span>
-    </div>
-    <div class="code" style="padding-left: 15px; padding-bottom: 5px">
-      Awards:
-      <ul style="margin-top: 5px">
-        <li>
-          <strong>The Mayor’s Award for Academic Excellence</strong> (Jun 2023)
-          <br />
-          Graduated <strong>1st</strong> in class at The Affiliated Senior High
-          School of NTNU.
-        </li>
-        <li>
-          <strong
-            >1st Runner-up, 4th ISS Kibo Robot Programming Challenge, JAXA &
-            TASA</strong
-          >
-          (Jun 2023) <br />
-          Developed an app in Android Studio to find the most efficient path for
-          Astrobee to scan the QR code. Claimed <strong>Champion</strong> in the
-          novice category (never participated before) and
-          <strong>1st Runner-up</strong> overall.
-        </li>
-      </ul>
-    </div>
+        <article class="entry" data-id="kuberay" data-kind="oss" data-ongoing data-after="areal">
+          <h3>Ray / KubeRay</h3>
+          <p class="when"><time datetime="2026-06">Jun 2026</time> – Present</p>
+          <p class="meta">First <a href="https://taione.org/fellowship/about">TAIONE Fellow</a> of the <a href="https://github.com/opensource4you/readme/pull/52">KubeRay track</a></p>
+          <p class="where">TAIONE Open Source Foundation</p>
+          <ul>
+            <li data-short="6 merged upstream PRs">
+              Contributed <strong>6</strong> merged upstream PRs to
+              <a href="https://github.com/ray-project/ray">Ray</a> &amp;
+              <a href="https://github.com/ray-project/kuberay">KubeRay</a>, the
+              Kubernetes operator for Ray clusters. See
+              <a href="https://github.com/search?q=is%3Apr+is%3Apr+author%3Awuallen57730+org%3Aray-project+org%3Akuberay-project&amp;type=pullrequests">my contributions</a>.
+            </li>
+            <li data-short="helm: expose Ingress in RayCluster chart">
+              Exposed Ingress configuration (<code>enableIngress</code>,
+              <code>ingressOptions</code>) in the RayCluster Helm chart, letting
+              users set up the Ray dashboard's Ingress through Helm with
+              backward-compatible defaults, and documented it in the official
+              Ray docs.
+            </li>
+            <li data-short="test: mTLS autoscaling e2e + History Server">
+              Added an e2e test for autoscaling on mTLS-enabled RayClusters and Go
+              unit tests for the KubeRay History Server, covering cert-manager
+              certificate updates on scale-up/down and the task lineage summary.
+            </li>
+          </ul>
+          <p class="tags">Go, Helm, Kubernetes, cert-manager</p>
+        </article>
+      </section>
 
-    <h2 class="subtitle" id="experience">
-      <strong>Industrial & Startup Experience</strong>
-    </h2>
+      <section class="timeline-section" id="industry">
+        <h2>Industry</h2>
 
-    <!-- <div class="code" style="padding-left: 15px; padding-top: 5px">
-      <ul style="margin-top: 0">
-        <li>
-          Assisted in developing deep learning models, AI Agents, and climate
-          risk prediction systems.
-        </li>
-        <li>
-          Built and maintained cloud service platforms (<u>GCP</u> /
-          <u>AWS</u>).
-        </li>
-        <li>
-          Handled large datasets for model training and optimization using
-          <u>SQL</u> / <u>NoSQL</u>.
-        </li>
-        <li>
-          Contributed to the development of climate finance models and risk
-          calculation tools.
-        </li>
-      </ul>
-    </div> -->
+        <article class="entry" data-id="recube" data-kind="work">
+          <h3><a href="https://recube.hk/en/">ReCube Limited</a></h3>
+          <p class="when"><time datetime="2025-12">Dec 2025</time> – <time datetime="2026-01">Jan 2026</time></p>
+          <p class="meta">Full Stack App Developer Intern, Full-time</p>
+          <p class="where">New Territories, Hong Kong SAR</p>
+          <ul>
+            <li data-short="n8n pipelines: −88% time &amp; tokens">
+              Refactored n8n automation pipelines for the internal system by
+              implementing data processing logic, reducing execution time and
+              token consumption by over <strong>88%</strong>.
+            </li>
+            <li data-short="web app in React &amp; Next.js">
+              Designed and implemented a web app using React &amp; Next.js.
+            </li>
+            <li data-short="REST APIs with NestJS + DynamoDB">
+              Developed RESTful APIs using NestJS and DynamoDB to support the
+              mobile application, collaborating with frontend developers to
+              implement the internal HR management system.
+            </li>
+          </ul>
+          <p class="tags">n8n, React, Next.js, NestJS, DynamoDB</p>
+        </article>
 
-    <div class="timeline-item">
-      <span class="text"
-        >ReCube Limited
-        <a target="_blank" href="https://recube.hk/en/"
-          ><i class="fa-solid fa-arrow-up-right-from-square"></i></a
-      ></span>
-      <span class="code date">Dec 2025 – Jan 2026</span>
-    </div>
-    <div class="timeline-item">
-      <span class="normal-text" style="padding-left: 15px"
-        >Full Stack App Developer, Full-time, Winter Intern
-      </span>
-      <span class="code date">New Territories, Hong Kong SAR</span>
-    </div>
+        <article class="entry" data-id="e2eelab" data-kind="work">
+          <h3>E2eeLab, Academia Sinica</h3>
+          <p class="when"><time datetime="2025-07">Jul 2025</time> – <time datetime="2025-08">Aug 2025</time></p>
+          <p class="meta">Summer Intern, Full-time, supervised by <a href="https://homepage.citi.sinica.edu.tw/pages/ziv/index_en.html">Dr. Lee, Gen-Cher</a></p>
+          <p class="where">Taipei, Taiwan</p>
+          <ul>
+            <li data-short="Java health Q&amp;A chatbot + JUnit">
+              Developed a robust Java (Maven) health Q&amp;A chatbot with response
+              format handling and validation through JUnit tests.
+            </li>
+            <li data-short="crawl 4,000 pages into FAISS">
+              Built a Traditional Chinese medical education corpus by crawling
+              over <strong>4,000</strong> webpages across six sites via Requests
+              and Selenium, organizing data into FAISS for efficient RAG
+              retrieval.
+            </li>
+            <li data-short="RAG + memory via LangGraph">
+              Integrated RAG and conversation history memory into an LLM using
+              LangGraph, enhancing contextual awareness and response coherence.
+            </li>
+            <li data-short="hybrid search + rerank: −80% latency">
+              Optimized the RAG pipeline with HyDE, BM25 + vector hybrid search,
+              LLM reranking, and RAGAS evaluation, reducing response time by
+              <strong>80%</strong> and improving relevant metrics in small-sample
+              evaluations.
+            </li>
+          </ul>
+          <p class="tags">Java, Maven, JUnit, Selenium, FAISS, LangGraph, RAGAS</p>
+        </article>
+      </section>
 
-    <div class="code" style="padding-left: 15px; padding-top: 5px">
-      <ul style="margin-top: 0">
-        <li>
-          Refactored <u>n8n</u> automation pipelines for the internal system, by
-          implementing data processing logic, reducing execution time and token
-          consumption by over <strong>88%</strong>.
-        </li>
-        <li>
-          Designed and implemented a Web App using <u>React</u> &
-          <u>Next.js</u>.
-        </li>
-        <li>
-          Developed RESTful APIs using <u>NestJS</u> and <u>DynamoDB</u> to
-          support the mobile application, collaborating with frontend developers
-          to implement the internal HR management system.
-        </li>
-      </ul>
-    </div>
+      <section class="timeline-section" id="education">
+        <h2>Education</h2>
 
-    <div class="timeline-item">
-      <span class="text">E2eeLab, Academia Sinica</span>
-      <span class="code date">Jul 2025 – Aug 2025</span>
-    </div>
-    <div class="timeline-item">
-      <span class="normal-text" style="padding-left: 15px"
-        >Summer Intern, Full-time, supervised by Dr. Lee, Gen-Cher
-        <a
-          target="_blank"
-          href="https://homepage.citi.sinica.edu.tw/pages/ziv/index_en.html"
-          ><i class="fa-solid fa-arrow-up-right-from-square"></i></a
-      ></span>
-      <span class="code date">Taipei, Taiwan</span>
-    </div>
+        <article class="entry" data-id="hkust" data-kind="edu">
+          <h3>The Hong Kong University of Science and Technology (HKUST)</h3>
+          <p class="when"><time datetime="2023-09">Sep 2023</time> – <time datetime="2027-06">Jun 2027</time></p>
+          <p class="meta">BEng in Computer Science</p>
+        </article>
 
-    <div class="code" style="padding-left: 15px; padding-top: 5px">
-      <ul style="margin-top: 0">
-        <li>
-          Developed a robust <u>Java (Maven)</u> health Q&A chatbot with
-          response format handling and validation through <u>JUnit</u> tests.
-        </li>
-        <li>
-          Built a Traditional Chinese medical education corpus by crawling over
-          <strong>4,000</strong> webpages across six sites via
-          <u>Requests</u> and <u>Selenium</u>, organizing data into
-          <u>FAISS</u> for efficient RAG retrieval.
-        </li>
-        <li>
-          Integrated RAG and conversation history memory using
-          <u>LangGraph</u> to boost contextual awareness and coherence.
-        </li>
-        <li>
-          Optimized the RAG pipeline with <u>HyDE</u>, <u>BM25</u> + vector
-          hybrid search, LLM reranking, and <u>RAGAs</u>-based evaluation,
-          reducing response time by <strong>80%</strong>.
-        </li>
-      </ul>
-    </div>
+        <article class="entry" data-id="hsnu" data-kind="edu">
+          <h3>The Affiliated Senior High School of National Taiwan Normal University (HSNU)</h3>
+          <p class="when"><time datetime="2020-09">Sep 2020</time> – <time datetime="2023-06">Jun 2023</time></p>
+          <p class="meta">Graduated 1st in class</p>
+        </article>
+      </section>
 
-    <!-- <div class="subtitle" id="publication">
-      <strong>Publication</strong>
-    </div> -->
+      <section class="timeline-section" id="awards">
+        <h2>Honors &amp; Awards</h2>
 
-    <h2 class="subtitle" id="research">
-      <strong>Research Experience</strong>
-    </h2>
-    <div class="timeline-item">
-      <span class="text">Agentic RL on AReaL 2.0</span>
-      <span class="code date">Aug 2026 – Present</span>
-    </div>
-    <div class="timeline-item">
-      <span class="normal-text" style="padding-left: 15px">
-        Undergraduate Research Assistant (UROP), supervised by Prof. Binhang
-        YUAN
-        <a target="_blank" href="https://binhangyuan.github.io/site/"
-          ><i class="fa-solid fa-arrow-up-right-from-square"></i
-        ></a>
-      </span>
-      <span class="code date">HKUST CSE</span>
-    </div>
-    <div class="code" style="padding-left: 15px; padding-top: 5px">
-      <ul style="margin-top: 5px">
-        <li>
-          Integrating a state-of-the-art agentic workflow into AReaL 2.0's
-          agent-service architecture to enable online reinforcement learning,
-          implementing the rollout workflow and reward interface that turn
-          deployed agent trajectories into training data.
-        </li>
-        <li>
-          Clarified Ray scheduler support in agent workflow compatibility notes.
-          See my contributions on GitHub.
-        </li>
-      </ul>
-    </div>
-    <div class="timeline-item">
-      <span class="text"
-        >Accelerating inference of LLMs on Resource-Constrained Devices</span
-      >
-      <span class="code date">Sep 2025 – Dec 2025</span>
-    </div>
-    <div class="timeline-item">
-      <span class="normal-text" style="padding-left: 15px"
-        >Undergraduate Research Assistant (UROP), supervised by Prof. Xiaomin
-        OUYANG
-        <a target="_blank" href="https://xmouyang.github.io/"
-          ><i class="fa-solid fa-arrow-up-right-from-square"></i></a
-      ></span>
-      <span class="code date">HKUST CSE</span>
-    </div>
-    <div class="code" style="padding-left: 15px; padding-top: 5px">
-      <ul style="margin-top: 5px">
-        <li>
-          Investigating GUI-capable LLM agents on resource-constrained mobile
-          hardware, collaborating closely with a PhD mentor.
-        </li>
-      </ul>
-    </div>
-    <div class="timeline-item">
-      <span class="text"
-        >LLM-Assisted Multimodal Sensing on Mobile Devices</span
-      >
-      <span class="code date">Feb 2025 – Jun 2025</span>
-    </div>
-    <div class="timeline-item">
-      <span class="normal-text" style="padding-left: 15px"
-        >Undergraduate Research Assistant (UROP), supervised by Prof. Xiaomin
-        OUYANG
-        <a target="_blank" href="https://xmouyang.github.io/"
-          ><i class="fa-solid fa-arrow-up-right-from-square"></i></a
-      ></span>
-      <span class="code date">HKUST CSE</span>
-    </div>
-    <div class="code" style="padding-left: 15px; padding-top: 5px">
-      <ul style="margin-top: 5px">
-        <li>
-          Built the <strong>MobiBox</strong> Android app to run multimodal
-          sensing workflows for smartphone-based activity analysis.
-        </li>
-        <li>
-          Addressed front-end debugging and on-device data collection issues to
-          stabilize field deployments.
-        </li>
-      </ul>
-    </div>
+        <article class="entry" data-id="cathay" data-kind="award">
+          <h3><a href="https://hackathon.cathaypacific.com/en_HK">Semi-Finalist, Cathay Hackathon 2025</a></h3>
+          <p class="when"><time datetime="2025-11">Nov 2025</time></p>
+          <ul>
+            <li data-short="top 36 of 475+ teams">
+              Led a team of 4 to develop a solution proposal and was selected as
+              one of 36 semi-finalists out of 475+ teams <strong>(top 7.5%)</strong>.
+            </li>
+          </ul>
+        </article>
 
-    <h2 class="subtitle" id="experience">
-      <strong>Open Source Experience</strong>
-    </h2>
-    <div class="timeline-item">
-      <span class="text">
-        <a href="https://github.com/ray-project/ray" target="_blank">Ray</a>
-        /
-        <a href="https://github.com/ray-project/kuberay" target="_blank">
-          KubeRay</a
-        ></span
-      >
-      <span class="code date">Jun. 2026 – Present</span>
-    </div>
-    <div class="code" style="padding-left: 15px; padding-top: 5px">
-      <ul style="margin-top: 5px">
-        <li>
-          Contributed 6 upstream PRs to Ray / KubeRay, the Kubernetes operator
-          for Ray clusters.
-        </li>
-        <li>
-          Enhanced Helm chart Ingress configurations and resolving a kubectl CLI
-          bug to ensure accurate worker group provisioning for distributed ML
-          clusters. See
-          <a href="https://github.com/ray-project/ray" target="_blank"
-            >my contributions</a
-          >
-          on GitHub.
-        </li>
-      </ul>
-    </div>
-    <h2 class="subtitle" id="awards">
-      <strong>Honors & Awards</strong>
-    </h2>
-    <div class="timeline-item">
-      <span class="text">
-        Semi-Finalist, Cathay Hackathon 2025
-        <a target="_blank" href="https://hackathon.cathaypacific.com/en_HK">
-          <i class="fa-solid fa-arrow-up-right-from-square"></i>
-        </a>
-        <br />
-      </span>
-      <span class="code date">Nov 2025</span>
-    </div>
-    <div class="code" style="padding-left: 15px; padding-bottom: 5px">
-      <ul style="margin-top: 0">
-        <li>
-          Led a team of 4 to develop a solution proposal for the Cathay
-          Hackathon 2025, and was selected as one of 36 semi-finalists out of
-          475+ participating teams <strong>(top 7.5%)</strong>.
-        </li>
-      </ul>
-    </div>
-    <div class="timeline-item">
-      <span class="text">
-        3rd Prize, HKUST Guangzhou One Million Dollar Entrepreneurship
-        Competition
-        <a
-          target="_blank"
-          href="https://ec.hkust.edu.hk/one-million-gz/2025/home"
-        >
-          <i class="fa-solid fa-arrow-up-right-from-square"></i>
-        </a>
-        <br />
-      </span>
-      <span class="code date">Oct 2025</span>
-    </div>
-    <div class="code" style="padding-left: 15px; padding-bottom: 5px">
-      <ul style="margin-top: 0">
-        <li>
-          Participated using the solution proposal from AI Fintech Corp.
-          <a target="_blank" href="https://aifinsys.com/">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          </a>
-          and ranked <strong>4th</strong> in the finals among the top 15 teams
-          shortlisted from over 100 teams, securing
-          <strong>3rd Prize</strong> in Undergraduate Project Special Award.
-        </li>
-      </ul>
-    </div>
+        <article class="entry" data-id="hkust-gz" data-kind="award">
+          <h3><a href="https://ec.hkust.edu.hk/one-million-gz/2025/home">3rd Prize, HKUST(GZ) One Million Dollar Entrepreneurship Competition</a></h3>
+          <p class="when"><time datetime="2025-10">Oct 2025</time></p>
+          <ul>
+            <li data-short="4th of 15 finalists">
+              Competed with the solution proposal from
+              <a href="https://aifinsys.com/">AI Fintech Corp.</a>, ranked
+              <strong>4th</strong> in the finals among the top 15 teams
+              shortlisted from 100+ teams, and won <strong>3rd Prize</strong> in
+              the Undergraduate Project Special Award.
+            </li>
+          </ul>
+        </article>
 
-    <div class="timeline-item">
-      <span class="text"
-        >Semi-Finalist, Institute for Supply Management Hong Kong Student Case
-        Competition</span
-      >
-      <span class="code date">Mar 2025</span>
-    </div>
-    <div class="code" style="padding-left: 15px; padding-bottom: 5px">
-      <ul style="margin-top: 0">
-        <li>
-          Led a team of 5 to write a report on a case study and ranked among the
-          <strong> Top 12.</strong>
-        </li>
-      </ul>
-    </div>
+        <article class="entry" data-id="ism" data-kind="award">
+          <h3>Semi-Finalist, Institute for Supply Management Hong Kong Student Case Competition</h3>
+          <p class="when"><time datetime="2025-03">Mar 2025</time></p>
+          <ul>
+            <li data-short="top 12, team of 5">
+              Led a team of 5 to write a case study report and ranked among the
+              <strong>Top 12</strong>.
+            </li>
+          </ul>
+        </article>
 
-    <h2 class="subtitle" id="skills"><strong>Skills</strong></h2>
+        <article class="entry" data-id="kibo" data-kind="award">
+          <h3>1st Runner-up, 4th ISS Kibo Robot Programming Challenge (JAXA &amp; TASA)</h3>
+          <p class="when"><time datetime="2023-06">Jun 2023</time></p>
+          <ul>
+            <li data-short="Astrobee path planning app">
+              Developed an Android Studio app that finds the most efficient path
+              for Astrobee to scan QR codes. Won <strong>Champion</strong> in the
+              novice category on a first attempt and <strong>1st Runner-up</strong>
+              overall.
+            </li>
+          </ul>
+        </article>
 
-    <div class="code" style="padding-left: 15px; padding-bottom: 10px">
-      <h3 style="margin-bottom: 0px">Programming Languages</h3>
-      <div class="skills-container">
-        <span class="skill-tag">C/C++</span>
-        <span class="skill-tag">Python</span>
-        <span class="skill-tag">SQL</span>
-      </div>
-      <h3 style="margin-bottom: 0px">Frameworks & Libraries</h3>
-      <div class="skills-container">
-        <span class="skill-tag">PyTorch</span>
-        <span class="skill-tag">React</span>
-        <span class="skill-tag">Next.js</span>
-        <span class="skill-tag">Bootstrap</span>
-        <span class="skill-tag">Git</span>
-        <span class="skill-tag">GitHub</span>
-        <span class="skill-tag">Docker</span>
-      </div>
-      <!-- <h3 style="margin-bottom: 0px">Cloud & Infrastructure</h3>
-      <div class="skills-container">
-        <span class="skill-tag">AWS (Lambda, DynamoDB)</span>
-        <span class="skill-tag">Google Cloud Platform</span>
-        <span class="skill-tag">Docker</span>
-      </div> -->
-      <h3 style="margin-bottom: 0px">Development</h3>
-      <div class="skills-container">
-        <span class="skill-tag">Web (HTML, CSS)</span>
-        <span class="skill-tag">Mobile (React Native)</span>
-      </div>
+        <article class="entry" data-id="mayor" data-kind="award">
+          <h3>The Mayor's Award for Academic Excellence</h3>
+          <p class="when"><time datetime="2023-06">Jun 2023</time></p>
+          <ul>
+            <li data-short="1st in class at HSNU">Graduated <strong>1st</strong> in class at HSNU.</li>
+          </ul>
+        </article>
+      </section>
 
-      <h3 style="margin-bottom: 0px">Design & Modeling</h3>
-      <div class="skills-container">
-        <span class="skill-tag">LaTeX</span>
-        <span class="skill-tag">Draw.io (UML)</span>
-      </div>
-      <h3 style="margin-bottom: 0px">Languages</h3>
-      <div class="skills-container">
-        <span class="skill-tag"><strong>Mandarin:</strong> Native</span>
-        <span class="skill-tag"><strong>English:</strong> Intermediate</span>
-        <span class="skill-tag"><strong>Japanese:</strong>JLPT N4</span>
-        <span class="skill-tag"><strong>Korean:</strong> TOPIK Level 1</span>
-        <span class="skill-tag"><strong>German:</strong> A1</span>
-      </div>
-    </div>
 
-    <h2 class="subtitle" id="courses">
-      <strong>CS-Related Coursework</strong>
-    </h2>
+      <section class="timeline-section" id="community">
+        <h2>Community &amp; Certificates</h2>
 
-    <div class="course-category">Artificial Intelligence</div>
-    <div class="course-list">
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 2211</span>
-          <span class="code"> - Exploring Artificial Intelligence </span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>B+</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 4211</span>
-          <span class="code"> - Machine Learning</span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>B</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 4221</span>
-          <span class="code">
-            - Introduction to Natural Language Processing</span
-          >
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>B+</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 4471</span>
-          <span class="code"> - Deep Learning in Computer Vision</span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>A+</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 4901D </span>
-          <span class="code">
-            - Embedded AI Systems
-            <a
-              target="_blank"
-              href="https://xmouyang.github.io/teaching/comp4901d-2026-spring/"
-              ><i class="fa-solid fa-arrow-up-right-from-square"></i></a
-          ></span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>B+</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 4901Z</span>
-          <span class="code">
-            - Reinforcement Learning
-            <a
-              target="_blank"
-              href="https://zjuchenlong.github.io/Teaching/25Fall_COMP4901Z/"
-              ><i class="fa-solid fa-arrow-up-right-from-square"></i
-            ></a>
-          </span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>B</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 4981</span>
-          <span class="code"> - Final Year Project (SO-101)</span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>Enrolling</strong></span
-        >
-      </div>
-    </div>
+        <article class="entry" data-id="badminton" data-kind="other">
+          <h3>Member, HKUST Badminton Club</h3>
+          <p class="when"><time datetime="2025-09">Sep 2025</time> – <time datetime="2026-06">Jun 2026</time></p>
+          <ul>
+            <li data-short="club sessions &amp; events">Active participant in club sessions and events.</li>
+          </ul>
+        </article>
 
-    <div class="course-category">Mathematics & Theory</div>
-    <div class="course-list">
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 2711H</span>
-          <span class="code">
-            - Honors Discrete Mathematical Tools for Computer Science
-            <a
-              target="_blank"
-              href="https://amir.goharshady.com/teaching/honors-discrete-math"
-              ><i class="fa-solid fa-arrow-up-right-from-square"></i
-            ></a>
-          </span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>B</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 3711</span>
-          <span class="code"> - Design and Analysis of Algorithms</span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>C</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 3721</span>
-          <span class="code">
-            - Theory of Computation (Joint Undergraduate/Postgraduate
-            Course)</span
-          >
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>B</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">MATH 1012</span>
-          <span class="code"> - Calculus IA </span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>A+</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">MATH 1014</span>
-          <span class="code"> - Calculus II </span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>A-</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">MATH 2011</span>
-          <span class="code"> - Introduction to Multivariable Calculus </span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>A</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">MATH 2111</span>
-          <span class="code"> - Matrix Algebra and Applications </span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>A-</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">ELEC 2600</span>
-          <span class="code"
-            >- Probability and Random Processes in Engineering</span
-          >
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>A</strong></span
-        >
-      </div>
-    </div>
+        <article class="entry" data-id="gcp" data-kind="other">
+          <h3>Google Digital Talent Exploration Program</h3>
+          <p class="when"><time datetime="2025-08">Aug 2025</time></p>
+          <p class="meta">Completed Google Cloud Platform Foundations training.</p>
+        </article>
 
-    <div class="course-category">Systems & Core Computer Science</div>
-    <div class="course-list">
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 1021</span>
-          <span class="code"> - Introduction to Computer Science </span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>B+</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 1942</span>
-          <span class="code">
-            - Exploring and Visualizing Data (Intro to Data Mining)
-          </span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>A</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 2011</span>
-          <span class="code"> - Programming with C++ </span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>A</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 2012</span>
-          <span class="code">
-            - Object-Oriented Programming and Data Structures
-          </span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>B+</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 2611</span>
-          <span class="code"> - Computer Organization </span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>B+</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 3111</span>
-          <span class="code"> - Software Engineering</span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>B+</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 3511</span>
-          <span class="code"> - Operating Systems</span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>A</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 4611</span>
-          <span class="code">
-            - Design and Analysis of Computer Architectures</span
-          >
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>Enrolling</strong></span
-        >
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">COMP 5621</span>
-          <span class="code">
-            - Computer Networks (Postgraduate Course)
-            <a
-              target="_blank"
-              href="https://xmouyang.github.io/teaching/comp5621-2026-fall/"
-              ><i class="fa-solid fa-arrow-up-right-from-square"></i></a
-          ></span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block">
-          <strong>Enrolling</strong>
-        </span>
-      </div>
-      <!-- <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">ELEC 5140</span>
-          <span class="code">
-            - Advanced Computer Architecture (Postgraduate Course)</span
-          >
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block"
-          ><strong>Enrolling</strong></span
-        >
-      </div>
-    --></div>
+        <article class="entry" data-id="tsa-it" data-kind="other">
+          <h3>I.T. Manager, HKUSTSU Taiwanese Student Association</h3>
+          <p class="when"><time datetime="2024-06">Jun 2024</time> – <time datetime="2025-06">Jun 2025</time></p>
+          <ul>
+            <li data-short="TSA database &amp; internal systems">
+              Managed the TSA database, maintained internal systems, and supported
+              Taiwanese community events.
+            </li>
+          </ul>
+        </article>
+      </section>
 
-    <div
-      style="
-        display: flex;
-        margin-top: 10px;
-        justify-content: space-between;
-        border-top: 1px solid #ccc;
-        padding-top: 5px;
-      "
-    >
-      <span>
-        <span class="text"><strong>CS-related CGA</strong></span>
-        <span class="code"> (As of Fall 2026/2027)</span>
-      </span>
-      <span class="code" style="min-width: 90px; display: inline-block"
-        ><strong id="cga-value">Calculating...</strong></span
-      >
-    </div>
-    <div style="margin-top: 5px; font-size: 0.85em; color: #666">
-      Note: HKUST Grade Distribution Guidelines — A range: 10-25% (usually
-      15-20%), B range: 25-40%, C range: 25-40%. <br />
-    </div>
+      <section id="skills">
+        <h2>Skills</h2>
+        <dl class="skills">
+          <dt>Programming languages</dt>
+          <dd>C/C++, Python, SQL</dd>
+          <dt>Frameworks &amp; tools</dt>
+          <dd>PyTorch, React, Next.js, Bootstrap, Git, GitHub, Docker, Kubernetes</dd>
+          <dt>Development</dt>
+          <dd>Web (HTML, CSS), Mobile (React Native)</dd>
+          <dt>Design &amp; modeling</dt>
+          <dd>LaTeX, Draw.io (UML)</dd>
+          <dt>Languages</dt>
+          <dd>Mandarin (native), English (intermediate), Japanese (JLPT N4), Korean (TOPIK Level 1), German (A1)</dd>
+          <dt>Hobbies</dt>
+          <dd>Chess, reading, workout, hiking, badminton, squash, traveling</dd>
+        </dl>
+      </section>
 
-    <div class="course-category">Self-taught Courses</div>
-    <div class="course-list">
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">MIT 6.5940</span>
-          <span class="code">
-            - TinyML and Efficient Deep Learning Computing
-            <a
-              target="_blank"
-              href="https://hanlab.mit.edu/courses/2024-fall-65940"
-              ><i class="fa-solid fa-arrow-up-right-from-square"></i
-            ></a>
-          </span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block">
-          <a
-            href="https://github.com/wuallen57730/MIT-6.5940-TinyML-Fall-24"
-            target="_blank"
-            ><strong>Lab & Assignment Implementation</strong></a
-          >
-        </span>
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">Stanford CS231n</span>
-          <span class="code">
-            - Deep Learning in Computer Vision
-            <a target="_blank" href="https://cs231n.stanford.edu/"
-              ><i class="fa-solid fa-arrow-up-right-from-square"></i
-            ></a>
-          </span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block">
-          <a href="https://github.com/wuallen57730" target="_blank"
-            ><strong>Lab & Assignment Implementation</strong></a
-          >
-        </span>
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">Stanford CS149</span>
-          <span class="code">
-            - Parallel Computing
-            <a
-              target="_blank"
-              href="https://gfxcourses.stanford.edu/cs149/fall25"
-              ><i class="fa-solid fa-arrow-up-right-from-square"></i
-            ></a>
-          </span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block">
-          <a href="https://github.com/wuallen57730/cs149-PA3" target="_blank"
-            ><strong>Lab & Assignment Implementation</strong></a
-          >
-        </span>
-      </div>
-      <div
-        style="
-          display: flex;
-          margin-bottom: 5px;
-          justify-content: space-between;
-        "
-      >
-        <span>
-          <span class="text">UCSD CSE 234</span>
-          <span class="code">
-            - Data Systems for Machine Learning
-            <a target="_blank" href="https://haoailab.com/cse234-w25/"
-              ><i class="fa-solid fa-arrow-up-right-from-square"></i
-            ></a>
-          </span>
-        </span>
-        <span class="code" style="min-width: 90px; display: inline-block">
-          <a
-            href="https://github.com/wuallen57730/MIT-6.5940-TinyML-Fall-24"
-            target="_blank"
-            ><strong>Lab & Assignment Implementation</strong></a
-          >
-        </span>
-      </div>
-    </div>
-
-    <div class="subtitle" id="projects"><strong>Projects</strong></div>
-    <div class="timeline-item">
-      <span class="text"> Robotic Manipulation System on SO-ARM101 </span>
-      <span class="code date">Jun 2026 - Present</span>
-    </div>
-    <div class="code" style="padding-left: 15px; padding-top: 5px">
-      <span class="normal-text">
-        Building an end-to-end manipulation stack on the SO-ARM101 arm with
-        LeRobot, covering teleoperated data collection, policy training, and
-        on-robot deployment.
-      </span>
-    </div>
-    <div class="timeline-item">
-      <span class="text">
-        Argos (8th Cathay Hackathon)
-        <a target="_blank" href="https://github.com/wuallen57730/jetsetgo-argos"
-          ><i class="fa-solid fa-arrow-up-right-from-square"></i
-        ></a>
-      </span>
-      <span class="code date">Oct 2025</span>
-    </div>
-    <div class="code" style="padding-left: 15px; padding-top: 5px">
-      <span class="normal-text">
-        Built <strong>Argos</strong>, an end-to-end AI cargo inspection platform
-        that links Android-based ULD (Unit Load Device) scanning, YOLOv8
-        detection, and LLM-powered damage reporting to automate inspection
-        workflows.
-      </span>
-    </div>
-    <div class="timeline-item">
-      <span class="text">
-        Taiwanese Student Association Website
-        <a target="_blank" href="https://hkust-tsa.vercel.app/"
-          ><i class="fa-solid fa-arrow-up-right-from-square"></i
-        ></a>
-      </span>
-      <span class="code date">Jul 2024</span>
-    </div>
-    <div class="code" style="padding-left: 15px; padding-top: 5px">
-      <span class="normal-text">
-        Designed and deployed a React.js site for incoming HKUST students from
-        Taiwan, centralizing association information and onboarding resources.
-      </span>
-    </div>
-
-    <div class="subtitle" id="other">
-      <strong>Other Experience and Certificates</strong>
-    </div>
-
-    <div class="timeline-item">
-      <span class="text">Member, HKUST Badminton Club</span>
-      <span class="code date">Sep 2025 – Jun 2026</span>
-    </div>
-    <div class="code" style="padding-left: 15px; padding-bottom: 5px">
-      <span class="normal-text"
-        >Active participant in club gaming sessions and events.</span
-      >
-    </div>
-    <div class="timeline-item">
-      <span class="text"
-        >Google Digital Talent Exploration Program (Google Cloud Platform
-        Foundations)</span
-      >
-      <span class="code date">Aug 2025</span>
-    </div>
-    <div class="code" style="padding-left: 15px; padding-bottom: 5px">
-      <span class="normal-text"
-        >Completed Google Cloud Platform Foundations training.</span
-      >
-    </div>
-
-    <div class="timeline-item">
-      <span class="text"
-        >I.T. Manager, HKUSTSU Taiwanese Student Association</span
-      >
-      <span class="code date">Jun 2024 – Jun 2025</span>
-    </div>
-    <div class="code" style="padding-left: 15px; padding-bottom: 5px">
-      <span class="normal-text"
-        >Managed TSA database, maintained internal systems, and supported
-        Taiwanese community events.</span
-      >
-    </div>
-
-    <div class="subtitle"><strong>Hobbies</strong></div>
-
-    <div class="code" style="padding-left: 15px; padding-bottom: 10px">
-      <div class="skills-container">
-        <span class="skill-tag">Reading</span>
-        <span class="skill-tag">Workout</span>
-        <span class="skill-tag">Hiking</span>
-        <span class="skill-tag">Badminton</span>
-        <span class="skill-tag">Squash</span>
-        <span class="skill-tag">Traveling</span>
-        <span class="skill-tag">Chess</span>
-        <!-- <span class="skill-tag">Learning German/Japanese</span> -->
-      </div>
-    </div>
-
-    <br /><br />
-
-    <!-- 新增: JavaScript 腳本 -->
-    <script src="cga.js"></script>
-    <script src="main.js"></script>
-  </body>
+      <section id="coursework">
+        <h2>Selected Coursework</h2>
+        <ul class="courses">
+          <li data-area="systems"><span class="code">COMP 5621</span> <a href="https://xmouyang.github.io/teaching/comp5621-2026-fall/">Computer Networks</a> (postgraduate)</li>
+          <li data-area="systems"><span class="code">COMP 4611</span> Design and Analysis of Computer Architectures</li>
+          <li data-area="systems"><span class="code">COMP 3511</span> Operating Systems</li>
+          <li data-area="systems"><span class="code">COMP 2611</span> Computer Organization</li>
+          <li data-area="ml"><span class="code">COMP 4901Z</span> <a href="https://zjuchenlong.github.io/Teaching/25Fall_COMP4901Z/">Reinforcement Learning</a></li>
+          <li data-area="systems"><span class="code">COMP 4901D</span> <a href="https://xmouyang.github.io/teaching/comp4901d-2026-spring/">Embedded AI Systems</a></li>
+          <li data-area="ml"><span class="code">COMP 4471</span> Deep Learning in Computer Vision <span class="grade">A+</span></li>
+          <li data-area="ml"><span class="code">COMP 4211</span> Machine Learning</li>
+        </ul>
+        <h3>Self-study</h3>
+        <ul class="courses">
+          <li data-area="mlsys"><span class="code"><a href="https://hanlab.mit.edu/courses/2024-fall-65940">MIT 6.5940</a></span> TinyML and Efficient Deep Learning Computing · <a href="https://github.com/wuallen57730/MIT-6.5940-TinyML-Fall-24">labs</a></li>
+          <li data-area="mlsys"><span class="code"><a href="https://gfxcourses.stanford.edu/cs149/fall25">Stanford CS149</a></span> Parallel Computing · <a href="https://github.com/wuallen57730/cs149-PA3">labs</a></li>
+          <li data-area="mlsys"><span class="code"><a href="https://haoailab.com/cse234-w25/">UCSD CSE 234</a></span> Data Systems for Machine Learning</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
 </html>

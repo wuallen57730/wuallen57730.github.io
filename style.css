@@ -1,370 +1,348 @@
+/* ---------- tokens ---------- */
 :root {
-  --primary-color: #000000;
+  --bg: #f6f6f3;
+  --panel: #ffffff;
+  --fg: #1c1e21;
+  --muted: #6a6f78;
+  --line: #e2e2dd;
+  --hover: rgba(0, 0, 0, 0.035);
+  --sel: rgba(36, 104, 210, 0.1);
+  --link: #1f5fc4;
+  --c-main: #2b2f36;
+  --c-edu: #2b2f36;
+  --c-research: #7a4fd0;
+  --c-work: #2468d2;
+  --c-oss: #11845b;
+  --c-project: #c0600b;
+  --c-other: #6f7782;
+  --c-award: #a67c00;
+  --add: #11845b;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1014;
+    --panel: #151820;
+    --fg: #e4e4e0;
+    --muted: #8b919c;
+    --line: #262b35;
+    --hover: rgba(255, 255, 255, 0.04);
+    --sel: rgba(108, 182, 255, 0.12);
+    --link: #79b8ff;
+    --c-main: #d7d7d2;
+    --c-edu: #d7d7d2;
+    --c-research: #b392f0;
+    --c-work: #6cb6ff;
+    --c-oss: #56d364;
+    --c-project: #f0a35e;
+    --c-other: #9ba3ae;
+    --c-award: #e3b341;
+    --add: #56d364;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1014;
+  --panel: #151820;
+  --fg: #e4e4e0;
+  --muted: #8b919c;
+  --line: #262b35;
+  --hover: rgba(255, 255, 255, 0.04);
+  --sel: rgba(108, 182, 255, 0.12);
+  --link: #79b8ff;
+  --c-main: #d7d7d2;
+  --c-edu: #d7d7d2;
+  --c-research: #b392f0;
+  --c-work: #6cb6ff;
+  --c-oss: #56d364;
+  --c-project: #f0a35e;
+  --c-other: #9ba3ae;
+  --c-award: #e3b341;
+  --add: #56d364;
+  color-scheme: dark;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
 body {
-  margin: 30px;
-  font-family: Helvetica, Arial, sans-serif;
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 20px;
-  color: var(--primary-color);
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 15px/1.6 var(--sans);
 }
+a { color: var(--link); text-underline-offset: 2px; }
+button { font: inherit; color: inherit; }
+code, kbd { font-family: var(--mono); font-size: 0.9em; }
+kbd { border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 4px; }
 
-/* 側邊導航欄 - 輕量風格 */
-.sidebar-nav {
-  position: fixed;
-  left: 20px;
-  top: 100px;
-  width: auto;
-  max-width: 150px;
-  background-color: transparent;
-  padding: 0;
-  z-index: 999;
-}
+.shell { max-width: 1200px; margin: 0 auto; padding: 0 16px 72px; }
 
-.nav-links {
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 0;
-}
-
-.nav-link {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-size: 15px;
-  padding: 4px 6px;
-  border-radius: 3px;
-  transition: all 0.2s ease;
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  border-left: 2px solid transparent;
-  padding-left: 8px;
-}
-
-.nav-link:hover {
-  color: var(--primary-color);
-  border-left-color: var(--primary-color);
-  background-color: rgba(28, 68, 76, 0.08);
-}
-
-.rectangle {
-  width: 50px;
-  height: 7px;
-  background-color: var(--primary-color);
-  border: 2px solid var(--primary-color);
-  margin-bottom: 15px;
-}
-
-.title {
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 8px;
-  margin-top: 0;
-}
-
-.subtitle {
-  font-size: 25px;
-  font-weight: bold;
-  margin-top: 30px;
-  margin-bottom: 15px;
-  border-bottom: 1px solid var(--primary-color);
-  padding-bottom: 5px;
-}
-
-.code {
-  font-family: "Menlo", monospace;
-  line-height: 1.6;
-}
-
-.text {
-  font-weight: bold;
-  font-size: 18px;
-}
-
-.normal-text {
-  font-weight: normal;
-  color: #000000;
-  font-size: 16px;
-}
-
-/* 頭像 */
-.profile-img {
-  float: right;
-  width: 220px;
-  max-width: 20%;
-  height: auto;
-  border-radius: 18px;
-  object-fit: contain;
-  background-color: #f5f5f5;
-  padding: 6px;
-  margin: 0 0 15px 20px;
-}
-
-/* 社交图标 */
-.social-icon {
-  font-size: 20px; /* 统一设置为20px */
-  color: var(--primary-color);
-  margin-right: 8px;
-  transition: all 0.3s;
-  display: inline-block;
-  vertical-align: middle; /* 添加垂直对齐 */
-}
-
-.social-icon[aria-label="GitHub"]:hover {
-  color: #6e5494;
-}
-
-.social-icon[aria-label="Instagram"]:hover {
-  color: #f56040;
-}
-
-.social-icon[aria-label="LinkedIn"]:hover {
-  color: #0a66c2;
-}
-
-.social-icon[aria-label="Location of HKUST"]:hover {
-  color: #0a66c2;
-}
-
-/* 时间戳布局 */
-.timeline-item {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  font: 13px/1.4 var(--mono);
 }
-
-/* 專用於實習職稱的樣式 */
-.timeline-item .normal-text {
-  color: #000000;
-  font-size: 16px;
-  font-weight: normal;
-}
-
-.date {
-  color: #000000;
-  white-space: nowrap;
-  margin-left: 15px;
-}
-
-/* 技能标签 */
-.skills-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.skill-tag {
-  background-color: rgb(234, 234, 234);
-  border-radius: 4px;
-  padding: 5px 10px;
-  font-family: "Menlo", monospace;
-  font-size: 16px;
-  white-space: nowrap;
-}
-
-/* 下载链接 */
-.download-link {
-  color: var(--primary-color);
-  margin-left: 5px;
-}
-
-/* 手机端适配 */
-@media (max-width: 768px) {
-  body {
-    margin: 15px;
-    padding: 0 10px;
-    margin-left: 15px;
-  }
-
-  .sidebar-nav {
-    display: none;
-  }
-
-  .title {
-    font-size: 24px;
-    text-align: center;
-  }
-
-  .subtitle {
-    font-size: 20px;
-  }
-
-  .profile-img {
-    width: 130px;
-    height: auto;
-    float: none;
-    display: block;
-    margin: 0 auto 20px auto;
-  }
-
-  .timeline-item {
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 15px;
-  }
-
-  .date {
-    margin-left: 0;
-    margin-top: 5px;
-    align-self: flex-end;
-  }
-
-  .skills-container {
-    justify-content: center;
-  }
-
-  .contact-info {
-    text-align: center;
-  }
-}
-
-/* 深色模式樣式 */
-body.dark-mode {
-  background-color: #121212;
-  color: #e0e0e0;
-}
-
-body.dark-mode .rectangle {
-  background-color: #e0e0e0;
-  border: 2px solid #e0e0e0;
-}
-
-body.dark-mode .title,
-body.dark-mode .subtitle,
-body.dark-mode .text {
-  color: #e0e0e0;
-}
-
-body.dark-mode .subtitle {
-  border-bottom: 1px solid #333;
-}
-
-body.dark-mode .code {
-  color: #e0e0e0;
-}
-
-body.dark-mode .normal-text,
-body.dark-mode .date {
-  color: #a0a0a0;
-}
-
-body.dark-mode .social-icon {
-  color: #e0e0e0;
-}
-
-body.dark-mode .social-icon[aria-label="GitHub"]:hover {
-  color: #9e7cc1;
-}
-
-body.dark-mode .social-icon[aria-label="Instagram"]:hover {
-  color: #f78f7a;
-}
-
-body.dark-mode .social-icon[aria-label="LinkedIn"]:hover {
-  color: #4d9bf0;
-}
-
-body.dark-mode .social-icon[aria-label="Location of HKUST"]:hover {
-  color: #4d9bf0;
-}
-
-body.dark-mode .skill-tag {
-  background-color: #333;
-  color: #e0e0e0;
-}
-
-body.dark-mode .download-link {
-  color: #e0e0e0;
-}
-
-/* 深色模式下的側邊欄 */
-body.dark-mode .sidebar-nav {
-  background-color: transparent;
-  border-right: none;
-}
-
-body.dark-mode .nav-link {
-  color: #b0b0b0;
-}
-
-body.dark-mode .nav-link:hover {
-  color: #e0e0e0;
-  border-left-color: #e0e0e0;
-  background-color: rgba(80, 80, 80, 0.3);
-}
-@media (max-width: 768px) {
-  body.dark-mode {
-    background-color: #121212;
-    color: #e0e0e0;
-  }
-}
-
-/* 深色模式切換按鈕位置與外觀 */
-#theme-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: none;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
-  color: var(--primary-color);
-  transition: color 0.3s;
-  z-index: 1000; /* 確保在最上層 */
-}
-
-#theme-toggle:hover {
-  color: #555;
-}
-
-/* 深色模式下的按鈕顏色 */
-body.dark-mode #theme-toggle {
-  color: #e0e0e0;
-}
-
-body.dark-mode #theme-toggle:hover {
-  color: #b0b0b0;
-}
-
-/* Course list hover effect */
-.course-list > div {
-  padding: 2px 8px;
+.prompt { margin: 0; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.p-user { color: var(--c-oss); }
+.p-path { color: var(--c-work); }
+.p-branch { color: var(--c-project); }
+.actions { display: flex; gap: 8px; flex-shrink: 0; }
+.actions button {
+  background: var(--panel);
+  border: 1px solid var(--line);
   border-radius: 6px;
-  transition: background-color 0.2s ease;
-  margin-left: -8px;
-  margin-right: -8px;
-  margin-bottom: 1px !important;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+.actions button:hover { border-color: var(--muted); }
+
+/* ---------- profile ---------- */
+.profile { padding: 32px 0 4px; }
+.profile h1 { margin: 0 0 8px; font-size: clamp(26px, 4vw, 36px); line-height: 1.2; letter-spacing: -0.01em; }
+.profile h1 span { color: var(--muted); font-weight: 500; }
+.lede { margin: 0 0 12px; max-width: 68ch; color: var(--muted); }
+.links { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0; padding: 0; list-style: none; font: 13px/1.6 var(--mono); }
+
+/* ---------- plain sections (always present; timeline ones hidden in git view) ---------- */
+#content > section { margin-top: 40px; }
+#content h2 { margin: 0 0 14px; font: 600 13px/1.4 var(--mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+body.fancy #content h2::before { content: "## "; color: var(--c-project); }
+
+.entry { margin: 0 0 22px; }
+.entry h3 { margin: 0; font-size: 16px; }
+.entry h3 a { color: inherit; }
+.when { margin: 2px 0; font: 12px/1.5 var(--mono); color: var(--muted); }
+.meta { margin: 2px 0 6px; color: var(--muted); }
+.entry ul { margin: 6px 0; padding-left: 20px; }
+.entry li { margin: 3px 0; }
+.tags { margin: 6px 0 0; font: 12px/1.5 var(--mono); color: var(--muted); }
+
+/* plain view: entries span the full page width, title left and date right on one line */
+.entry { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; }
+.entry > * { grid-column: 1 / -1; }
+.entry > h3 { grid-column: 1; }
+.entry > .when { grid-column: 2; grid-row: 1; margin: 0; align-self: baseline; white-space: nowrap; }
+.entry > .meta { grid-column: 1; }
+.where { grid-column: 2; grid-row: 2; margin: 2px 0 6px; align-self: baseline; text-align: right; white-space: nowrap; font: 12px/1.5 var(--mono); color: var(--muted); }
+body:not(.fancy) .lede { max-width: none; }
+@media (max-width: 560px) {
+  .entry > .when { grid-column: 1; grid-row: auto; margin: 2px 0; }
+  .entry > .where { grid-column: 1; grid-row: auto; margin-top: -4px; text-align: left; white-space: normal; }
 }
 
-.course-list > div:hover {
-  background-color: rgba(0, 0, 0, 0.08);
+.skills { display: grid; grid-template-columns: minmax(150px, 220px) 1fr; gap: 6px 20px; margin: 0; }
+.skills dt { font: 600 13px/1.6 var(--mono); }
+.skills dd { margin: 0; }
+.courses { margin: 0 0 18px; padding: 0; list-style: none; }
+.courses li { padding: 4px 0; border-bottom: 1px dashed var(--line); }
+.courses .code { display: inline-block; min-width: 118px; font: 13px/1.6 var(--mono); color: var(--c-project); }
+.courses .code a { color: inherit; }
+.courses .grade { margin-left: 6px; padding: 0 6px; border: 1px solid var(--line); border-radius: 4px; font: 600 12px/1.6 var(--mono); }
+#coursework h3 { margin: 18px 0 8px; font: 600 13px/1.4 var(--mono); color: var(--muted); }
+
+/* plain view: table of contents in a sticky left column (a scrollable row on small screens) */
+html { scroll-behavior: smooth; }
+#content > header, #content > section { scroll-margin-top: 72px; }
+.toc { display: none; }
+body:not(.fancy) #content { display: grid; grid-template-columns: 170px minmax(0, 1fr); column-gap: 48px; }
+body:not(.fancy) #content > * { grid-column: 2; }
+body:not(.fancy) #content > .toc {
+  display: block;
+  grid-column: 1;
+  grid-row: 1 / span 30;
+  align-self: start;
+  position: sticky;
+  top: 72px;
+  padding-top: 32px;
+  font: 13px/1.4 var(--mono);
+}
+.toc-h { margin: 0 0 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.toc ol { margin: 0; padding: 0; list-style: none; }
+.toc a {
+  display: block;
+  padding: 5px 0 5px 12px;
+  border-left: 2px solid var(--line);
+  color: var(--muted);
+  text-decoration: none;
+}
+.toc a:hover { color: var(--fg); }
+.toc a[aria-current="true"] { color: var(--fg); border-left-color: var(--fg); font-weight: 600; }
+@media (max-width: 860px) {
+  body:not(.fancy) #content { display: block; }
+  body:not(.fancy) #content > .toc {
+    position: sticky;
+    top: 49px;
+    z-index: 5;
+    margin: 0 -16px;
+    padding: 8px 16px;
+    overflow-x: auto;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    scrollbar-width: none;
+  }
+  .toc-h { display: none; }
+  .toc ol { display: flex; gap: 4px; white-space: nowrap; }
+  .toc a { padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; }
+  .toc a[aria-current="true"] { border-color: var(--fg); }
+  #content > header, #content > section { scroll-margin-top: 104px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }
 
-body.dark-mode .course-list > div:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-}
+.view { display: none; }
+body.fancy .view { display: block; }
+body.fancy .timeline-section { display: none; }
 
-/* Course Category Headers */
-.course-category {
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 8px;
-  padding-left: 10px;
-  border-left: 4px solid var(--primary-color);
+/* ---------- git view ---------- */
+.filters { display: flex; flex-wrap: wrap; gap: 6px; margin: 28px 0 12px; font: 12px/1.4 var(--mono); }
+.filters button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
 }
+.filters button::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--dot); }
+.filters button[aria-pressed="true"] { background: var(--panel); border-color: var(--fg); }
 
-body.dark-mode .course-category {
-  border-left-color: #e0e0e0;
-  color: #e0e0e0;
+.log-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+  gap: 20px;
+  align-items: start;
+}
+.log {
+  position: relative;
+  padding: 8px 0;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font: 13px/1 var(--mono);
+  overflow: hidden;
+}
+.graph { position: absolute; top: 8px; left: 0; overflow: visible; pointer-events: none; }
+.edge { fill: none; stroke: var(--k); stroke-width: 2; }
+.dot { fill: var(--k); stroke: var(--panel); stroke-width: 2; transition: r 0.15s; }
+.dot.merge { fill: var(--panel); stroke: var(--k); }
+.dot.selected { r: 6.5; }
+.k-main { --k: var(--c-main); }
+.k-edu { --k: var(--c-edu); }
+.k-research { --k: var(--c-research); }
+.k-work { --k: var(--c-work); }
+.k-oss { --k: var(--c-oss); }
+.k-project { --k: var(--c-project); }
+.k-other { --k: var(--c-other); }
+.k-award { --k: var(--c-award); }
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 34px;
+  padding: 0 14px 0 var(--graph-w);
+  background: none;
+  border: 0;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.row:hover { background: var(--hover); }
+.row.selected { background: var(--sel); }
+.row:focus-visible { outline: 2px solid var(--c-work); outline-offset: -2px; }
+.hash { flex-shrink: 0; color: var(--c-project); }
+.refs { display: flex; flex-shrink: 0; gap: 4px; }
+.ref { padding: 0 6px; border: 1px solid currentColor; border-radius: 4px; font-size: 11px; line-height: 18px; }
+.ref.head { color: var(--c-oss); font-weight: 600; }
+.ref.tag { color: var(--c-award); }
+.ref.branch { color: var(--c-research); }
+.subject { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.subject.is-merge { color: var(--muted); }
+.date { flex-shrink: 0; font-size: 12px; color: var(--muted); }
+.dim { opacity: 0.22; }
+
+.show {
+  position: sticky;
+  top: 64px;
+  max-height: calc(100vh - 84px);
+  overflow: auto;
+  padding: 16px 18px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font: 12.5px/1.6 var(--mono);
+}
+.show p { margin: 0; }
+.show-cmd { color: var(--muted); margin-bottom: 8px !important; }
+.kw, .sha-line .kw { color: var(--c-project); }
+.sha { color: var(--c-project); word-break: break-all; }
+.show-refs { color: var(--c-oss); }
+.show-close { display: none; }
+.msg { margin: 14px 0 0 2ch; font-family: var(--sans); font-size: 14px; line-height: 1.6; }
+.msg-subject { font: 600 13px/1.5 var(--mono); }
+.msg h3 { margin: 10px 0 2px; font-size: 15px; }
+.msg h3 a { color: inherit; }
+.msg ul { margin: 8px 0 0; padding-left: 18px; }
+.msg li { margin: 4px 0; }
+.msg li::marker { color: var(--c-oss); }
+.diff { margin: 14px 0 0; padding: 10px 12px; background: var(--bg); border-radius: 6px; font: 12px/1.6 var(--mono); white-space: pre-wrap; }
+.d-meta { color: var(--muted); }
+.d-add { color: var(--add); }
+.hint { margin: 10px 0 0; font: 12px/1.6 var(--mono); color: var(--muted); }
+
+/* ---------- small screens: git show becomes a bottom sheet ---------- */
+@media (max-width: 880px) {
+  .log-layout { grid-template-columns: minmax(0, 1fr); }
+  .show {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 20;
+    max-height: 70vh;
+    border-radius: 14px 14px 0 0;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.25);
+    transform: translateY(105%);
+    transition: transform 0.25s ease;
+  }
+  .show.open { transform: none; }
+  .show-close {
+    display: block;
+    position: sticky;
+    top: 0;
+    float: right;
+    width: 32px;
+    height: 32px;
+    margin: -6px -6px 0 0;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+  }
+}
+@media (max-width: 560px) {
+  .hash, .ref.branch, .ref.tag { display: none; }
+  .row { gap: 8px; padding-right: 10px; }
+  .date { font-size: 11px; }
+  .skills { grid-template-columns: 1fr; gap: 2px; }
+  .skills dd { margin-bottom: 8px; }
+  .p-path, .p-branch { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .show, .dot { transition: none; }
 }
