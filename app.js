@@ -411,7 +411,36 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
       out.append(block);
       out.scrollTop = out.scrollHeight;
     };
-    const echo = (raw) => write(line(`<span class="c-ps1">lima@hkust:~/lima-wu (${esc(prompt.branch())}) $</span> ${esc(raw)}`, "c-echo"));
+    // working directory: "" is the repo root, "coursework" is the only subdirectory
+    let cwd = "";
+    const pathText = () => `~/lima-wu${cwd ? `/${cwd}` : ""}`;
+    const setCwd = (dir) => {
+      cwd = dir;
+      document.querySelectorAll(".p-path, .c-path").forEach((el) => (el.textContent = pathText()));
+    };
+    const echo = (raw) => write(line(`<span class="c-ps1">lima@hkust:${pathText()} (${esc(prompt.branch())}) $</span> ${esc(raw)}`, "c-echo"));
+
+    // a tiny filesystem: /home/lima ("home") → lima-wu (the repo, "") → coursework/
+    // "~" means the repo, since that's where every visitor lives. returns { dir } or { file }, or null
+    const FILES = ["README.md", "skills.txt"];
+    function resolvePath(raw) {
+      let parts = cwd ? ["lima-wu", cwd] : ["lima-wu"];
+      let path = raw;
+      if (path.startsWith("~")) {
+        parts = ["lima-wu"];
+        path = path.replace(/^~(\/lima-wu)?/, "");
+      }
+      for (const seg of path.split("/").filter(Boolean)) {
+        if (seg === "..") parts.pop();
+        else if (seg !== ".") parts.push(seg);
+      }
+      const at = parts.join("/");
+      if (at === "") return { dir: "home" };
+      if (at === "lima-wu") return { dir: "" };
+      if (at === "lima-wu/coursework") return { dir: "coursework" };
+      const file = at.startsWith("lima-wu/") ? at.slice(8) : "";
+      return FILES.includes(file) ? { file } : null;
+    }
     const scrollToLog = () => log.scrollIntoView({ block: "nearest", behavior: "smooth" });
 
     // ----- refs: HEAD, a branch name, a tag, or a hash prefix -----
@@ -436,9 +465,8 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
     const skills = () => [...document.querySelectorAll("#skills dt")]
       .map((dt) => line(`${k(dt.textContent.padEnd(24))}${esc(dt.nextElementSibling.textContent.replace(/\s+/g, " ").trim())}`))
       .join("");
-    const courses = () => [...document.querySelectorAll("#coursework .courses li")]
-      .map((li) => line(esc(li.textContent.replace(/\s+/g, " ").trim())))
-      .join("");
+    const courseNames = () => [...document.querySelectorAll("#coursework .courses li")]
+      .map((li) => li.textContent.replace(/\s+/g, " ").trim());
     const inProgress = () => branches.filter((b) => !b.merge)
       .map((b) => ({ name: b.name, note: b.entry.title, until: b.entry.ongoing ? "" : `, until ${isoOf(b.entry.end)}` }))
       .concat(commits.filter((c) => c.kind === "edu" && !c.entry.ongoing && c.entry.end > NOW).map((c) => ({ name: `edu/${c.entry.id}`, note: c.entry.title, until: `, until ${isoOf(c.entry.end)}` })))
@@ -553,6 +581,7 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
       git(args) {
         const [sub, ...rest] = args;
         if (!sub || sub === "--help") return COMMANDS.help();
+        if (sub === "--version") return line("git version 2027.06 (expected graduation build)");
         const fn = GIT[sub];
         if (!fn) return line(`git: '${esc(sub)}' is not a git command. See 'git --help'.`, "c-err");
         return fn(rest);
@@ -560,20 +589,38 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
       whoami: () => profile() + contact(),
       contact: () => contact(),
       ls(args) {
-        if ((args[0] || "").startsWith("coursework")) return courses();
-        return line(`${k("README.md")}  ${k("skills.txt")}  ${k("coursework/")}`);
+        const flags = args.filter((a) => a.startsWith("-")).join("");
+        const target = args.find((a) => !a.startsWith("-")) || ".";
+        const at = resolvePath(target);
+        if (!at) return line(`ls: cannot access '${esc(target)}': No such file or directory`, "c-err");
+        const all = flags.includes("a");
+        let entries; // [name, isDirectory]
+        if (at.file) entries = [[at.file, false]];
+        else if (at.dir === "home") entries = [...(all ? [[".bashrc", false], [".gitconfig", false]] : []), ["lima-wu/", true]];
+        else if (at.dir === "coursework") entries = courseNames().map((n) => [n, false]);
+        else entries = [...(all ? [[".git/", true]] : []), ["README.md", false], ["skills.txt", false], ["coursework/", true]];
+        const name = ([n, isDir]) => (isDir ? k(n) : esc(n));
+        if (flags.includes("l")) {
+          return entries.map((e) => line(`<span class="c-dim">${e[1] ? "drwxr-xr-x" : "-rw-r--r--"}  lima  hkust</span>  ${name(e)}`)).join("");
+        }
+        // course names have spaces, so they go one per line; everything else fits on one row
+        return at.dir === "coursework" ? entries.map((e) => line(name(e))).join("") : line(entries.map(name).join("  "));
       },
       cat(args) {
-        const file = args[0] || "";
-        if (file === "README.md") {
+        const target = args[0] || "";
+        const at = target ? resolvePath(target) : null;
+        if (at && "dir" in at) return line(`cat: ${esc(target)}: Is a directory`, "c-err");
+        if (at?.file === "README.md") {
           document.getElementById("view-toggle").click();
           return "";
         }
-        if (file === "skills.txt") return skills();
-        if (file.startsWith("coursework")) return line(`cat: ${esc(file)}: Is a directory (try ls coursework)`, "c-err");
-        return line(`cat: ${esc(file || "")}: No such file or directory`, "c-err");
+        if (at?.file === "skills.txt") return skills();
+        return line(`cat: ${esc(target)}: No such file or directory`, "c-err");
       },
-      plain: () => COMMANDS.cat(["README.md"]),
+      plain() {
+        document.getElementById("view-toggle").click();
+        return "";
+      },
       theme() {
         document.getElementById("theme-toggle").click();
         return line("theme switched. same history, new lighting.", "c-dim");
@@ -584,9 +631,33 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
       },
       history: () => (typed.length ? typed.map((t, i) => line(`${String(i + 1).padStart(4)}  ${esc(t)}`)).join("") : line("no commands yet. the only empty log on this page.", "c-dim")),
       sudo: () => line("lima is not in the sudoers file. This incident will be reported.", "c-err"),
-      rm: () => line("rm: refusing to remove that: it's someone's life story", "c-err"),
+      rm: () => line("rm: refusing to remove that: it's someone's whole career", "c-err"),
       exit: () => line("exit status 0: nothing went wrong, so nobody gets to leave. (type plain for the plain view)", "c-dim"),
       vim: () => line("you are now stuck in vim. (just kidding: there is no vim here.)", "c-dim"),
+      // the basics people try first in any shell
+      pwd: () => line(`/home/lima/lima-wu${cwd ? `/${cwd}` : ""}`),
+      cd(args) {
+        const target = args.find((a) => !a.startsWith("-")) || "~";
+        const at = resolvePath(target);
+        if (!at) return line(`cd: no such file or directory: ${esc(target)}`, "c-err");
+        if (at.file) return line(`cd: not a directory: ${esc(target)}`, "c-err");
+        if (at.dir === "home") return line("cd: up there is just old dotfiles. everything worth seeing is in ~/lima-wu.", "c-dim");
+        const entering = at.dir === "coursework" && cwd !== "coursework";
+        setCwd(at.dir);
+        return entering
+          ? line(`try ${k("ls")}, or <a href="#coursework">jump to the Coursework section ↓</a>. ${k("cd ..")} to go back.`, "c-dim")
+          : "";
+      },
+      echo: (args) => line(esc(args.join(" "))),
+      // always Hong Kong time, like a shell on a machine at HKUST: "Thu Oct 29 00:44:36 HKT 2026"
+      date() {
+        const parts = Object.fromEntries(new Intl.DateTimeFormat("en-US", {
+          timeZone: "Asia/Hong_Kong", weekday: "short", month: "short", day: "2-digit",
+          hour: "2-digit", minute: "2-digit", second: "2-digit", year: "numeric", hourCycle: "h23",
+        }).formatToParts(new Date()).map((p) => [p.type, p.value]));
+        return line(`${parts.weekday} ${parts.month} ${parts.day} ${parts.hour}:${parts.minute}:${parts.second} HKT ${parts.year}`);
+      },
+      man: () => line(`no manual entry. this repo documents itself: try ${k("help")}`, "c-dim"),
     };
 
     function run(raw) {
@@ -616,7 +687,8 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
       if (parts.length === 1) pool = [...Object.keys(COMMANDS)];
       else if (parts[0] === "git" && parts.length === 2) pool = GIT_SUBS;
       else if (parts[0] === "git" && ["show", "checkout", "switch", "log"].includes(parts[1])) pool = refNames();
-      else if (parts[0] === "cat" || parts[0] === "ls") pool = ["README.md", "skills.txt", "coursework/"];
+      else if (parts[0] === "cat" || parts[0] === "ls") pool = cwd ? ["../README.md", "../skills.txt", ".."] : ["README.md", "skills.txt", "coursework/"];
+      else if (parts[0] === "cd") pool = cwd ? ["..", "~"] : ["coursework/", "~"];
       else return;
       const word = parts[parts.length - 1];
       const hits = pool.filter((p) => p.startsWith(word));
@@ -674,7 +746,7 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
 
     // boot message: a short tutorial, the way a shell greets you
     write(
-      line(`this page is a git repo of my life. run ${k("git status")} to see what I'm working on right now, or ${k("help")} for the full list.`) +
+      line(`this page is a git repo of my journey in CS. run ${k("git status")} to see what I'm working on right now, or ${k("help")} for the full list.`) +
       line("Tab autocompletes · ↑/↓ recall commands · press / anywhere to type here · no keyboard? tap a command below", "c-dim") +
       line(`(warning: ${k("git push --force")} is disabled. my past self already tried.)`, "c-dim")
     );
