@@ -111,7 +111,7 @@ kbd { border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4p
 .profile { padding: 32px 0 4px; }
 .profile h1 { margin: 0 0 8px; font-size: clamp(26px, 4vw, 36px); line-height: 1.2; letter-spacing: -0.01em; }
 .profile h1 span { color: var(--muted); font-weight: 500; }
-.lede { margin: 0 0 12px; max-width: 68ch; color: var(--muted); }
+.lede { margin: 0 0 12px; color: var(--muted); }
 .links { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0; padding: 0; list-style: none; font: 13px/1.6 var(--mono); }
 
 /* ---------- plain sections (always present; timeline ones hidden in git view) ---------- */
@@ -135,7 +135,6 @@ body.fancy #content h2::before { content: "## "; color: var(--c-project); }
 .entry > .when { grid-column: 2; grid-row: 1; margin: 0; align-self: baseline; text-align: right; white-space: nowrap; }
 .entry > .meta { grid-column: 1; }
 .where { grid-column: 2; grid-row: 2; margin: 2px 0 6px; align-self: baseline; text-align: right; white-space: nowrap; font: 12px/1.5 var(--mono); color: var(--muted); }
-body:not(.fancy) .lede { max-width: none; }
 @media (max-width: 560px) {
   .entry > .when { grid-column: 1; grid-row: auto; margin: 2px 0; text-align: left; }
   .entry > .where { grid-column: 1; grid-row: auto; margin-top: -4px; text-align: left; white-space: normal; }
