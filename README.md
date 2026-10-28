@@ -8,7 +8,7 @@ commit, merged back when it ends. Click a commit to see it as `git show`.
 There is also a tiny git shell above the graph: try `help`, `git status`, `git branch -v`,
 `git show <hash>`, `git checkout <branch>` or `git blame` (Tab completes, `/` focuses it).
 
-**Website:** https://wuallen57730.github.io/limaWU-website/
+**Website:** https://wuallen57730.github.io/
 
 ## How it works
 

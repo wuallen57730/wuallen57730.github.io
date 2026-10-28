@@ -388,7 +388,7 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
   };
   const KIND_OF_SCOPE = Object.fromEntries(Object.entries(SCOPE).map(([kind, scope]) => [scope, kind]));
   const KIND_OF_TAG = Object.fromEntries(Object.entries(TAG).map(([kind, tag]) => [tag.toLowerCase(), kind]));
-  const REPO_URL = "https://github.com/wuallen57730/limaWU-website"; // this site's source, for git remote / git clone
+  const REPO_URL = "https://github.com/wuallen57730/wuallen57730.github.io"; // this site's source, for git remote / git clone
 
   function setupConsole({ history, prompt, log, select, applyFilter, applyBranch, applyMask, setLogCmd }) {
     const out = document.getElementById("console-out");

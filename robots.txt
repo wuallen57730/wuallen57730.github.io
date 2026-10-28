@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://wuallen57730.github.io/limaWU-website/sitemap.xml
+Sitemap: https://wuallen57730.github.io/sitemap.xml
