@@ -93,15 +93,24 @@
       store.set("theme", root.dataset.theme);
     });
 
+    // plain view only sticks for this tab: every new visit opens in the git view
+    const session = {
+      get() {
+        try { return sessionStorage.getItem(`${KEY}-view`); } catch { return null; }
+      },
+      set(v) {
+        try { sessionStorage.setItem(`${KEY}-view`, v); } catch { /* storage blocked */ }
+      },
+    };
     const btn = document.getElementById("view-toggle");
-    let plain = store.get("view") === "plain" || location.hash === "#plain";
+    let plain = session.get() === "plain" || location.hash === "#plain";
     const apply = () => {
       document.body.classList.toggle("fancy", !plain);
       btn.textContent = plain ? "git view" : "plain view";
     };
     btn.addEventListener("click", () => {
       plain = !plain;
-      store.set("view", plain ? "plain" : "fancy");
+      session.set(plain ? "plain" : "fancy");
       apply();
       onToggle(plain);
     });

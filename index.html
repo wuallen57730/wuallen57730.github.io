@@ -77,10 +77,10 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap">
   <link rel="stylesheet" href="style.css">
   <script>
-    try {
-      var t = localStorage.getItem("gitlog-theme");
-      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
-    } catch (e) {}
+    // dark by default; light only if the visitor picked it with the theme button
+    var t = null;
+    try { t = localStorage.getItem("gitlog-theme"); } catch (e) {}
+    document.documentElement.setAttribute("data-theme", t === "light" ? "light" : "dark");
   </script>
 </head>
 <body>
