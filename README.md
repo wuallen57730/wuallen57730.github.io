@@ -36,6 +36,8 @@ Add or change an `<article class="entry">` in `index.html`:
 - `data-kind`: `research`, `oss`, `work`, `edu`, `award`, `project` or `other`.
 - One `<time>` is a point in time; two are a start and end; `data-ongoing` means "Present".
 - Commit subjects use the `[Tag] message` style, e.g. `[Research] Agentic RL on AReaL 2.0` or `[Award] …`; the full entry appears in `git show`.
+- Add `data-commit="message"` (and optionally `data-date="YYYY-MM"`) to a bullet to give it
+  its own commit on the branch (e.g. the TAIONE fellowship on `oss/kuberay`, Oct 2026).
 
 ## Preview
 

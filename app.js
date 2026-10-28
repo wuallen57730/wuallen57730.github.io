@@ -44,6 +44,8 @@
         bullets: [...el.querySelectorAll("ul > li")].map((li) => ({
           html: li.innerHTML.trim(),
           short: li.dataset.short || li.textContent.trim(),
+          commit: li.dataset.commit || "", // set → this bullet gets its own commit on the branch
+          date: li.dataset.date || "", // optional YYYY-MM for that commit
         })),
         tags: (el.querySelector(".tags")?.textContent ?? "").split(",").map((s) => s.trim()).filter(Boolean),
         start,
@@ -155,6 +157,15 @@
       branches.push(b);
 
       b.commits.push(add({ key: `${name}:0`, t: e.start + 0.05, kind: e.kind, branch: b, entry: e, subject: `[${TAG[e.kind]}] ${e.title}` }));
+      // bullets marked with data-commit become extra commits (at data-date, else right after the first one)
+      e.bullets.forEach((bl, i) => {
+        if (!bl.commit) return;
+        b.commits.push(add({
+          key: `${name}:${i + 1}`, t: bl.date ? toMonth(bl.date) + 0.5 + i * 0.01 : e.start + 0.1 + i * 0.01,
+          kind: e.kind, branch: b, entry: e, bullet: i, subject: `[${TAG[e.kind]}] ${bl.commit}`,
+        }));
+      });
+      b.commits.sort((x, y) => x.t - y.t);
       if (merged) {
         b.merge = add({ key: `${name}:merge`, t: e.end + 0.95, kind: e.kind, merge: b, entry: e, subject: `Merge branch '${name}'` });
       } else {
@@ -240,8 +251,10 @@
       const tip = c.merge.commits[c.merge.commits.length - 1];
       merge = `<p><span class="kw">Merge:</span> ${parent ? parent.sha.slice(0, 7) : "0000000"} ${tip.sha.slice(0, 7)}</p>`;
     }
-    const bullets = e.bullets.length
-      ? `<ul>${e.bullets.map((b) => `<li>${b.html}</li>`).join("")}</ul>`
+    // a data-commit bullet shows only on its own commit; every other commit shows the rest
+    const shown = c.bullet == null ? e.bullets.filter((b) => !b.commit) : [e.bullets[c.bullet]];
+    const bullets = shown.length
+      ? `<ul>${shown.map((b) => `<li>${b.html}</li>`).join("")}</ul>`
       : "";
     const diff = e.tags.length
       ? `<pre class="diff"><span class="d-meta">diff --git a/skills.txt b/skills.txt</span>
