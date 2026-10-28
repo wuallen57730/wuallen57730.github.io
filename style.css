@@ -305,15 +305,66 @@ body.fancy .timeline-section { display: none; }
 .d-add { color: var(--add); }
 .hint { margin: 10px 0 0; font: 12px/1.6 var(--mono); color: var(--muted); }
 
+/* ---------- console: a tiny git shell above the graph ---------- */
+.console {
+  margin: 28px 0 0;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font: 12.5px/1.6 var(--mono);
+}
+.console-out { max-height: 260px; overflow-y: auto; padding: 10px 14px 0; }
+.c-block { margin-bottom: 6px; }
+.c-line { white-space: pre-wrap; overflow-wrap: anywhere; }
+.c-echo { margin-top: 4px; }
+.c-ps1, .c-ps1 + input { color: var(--c-oss); }
+.c-dim { color: var(--muted); }
+.c-err { color: #e5534b; }
+.c-ok { color: var(--c-oss); }
+.c-k { color: var(--c-work); }
+.c-hash { color: var(--c-project); }
+.c-ref { color: var(--c-oss); }
+.console-line { display: flex; align-items: center; gap: 8px; padding: 6px 14px 10px; cursor: text; }
+.console-line .c-ps1 { flex-shrink: 0; }
+#console-in {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  outline: none;
+  color: var(--fg);
+  font: inherit;
+  caret-color: var(--c-oss);
+}
+.console:focus-within { border-color: var(--c-oss); }
+.console-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 14px 12px; }
+.console-chips button {
+  padding: 2px 8px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font: 11.5px/1.6 var(--mono);
+  color: var(--muted);
+  cursor: pointer;
+}
+.console-chips button:hover { color: var(--fg); border-color: var(--muted); }
+.filters { margin-top: 16px; }
+@media (max-width: 560px) {
+  .console-line .c-ps1 { display: none; }
+  .console-line::before { content: "$"; color: var(--c-oss); }
+  #console-in { font-size: 16px; } /* 16px keeps iOS from zooming in on focus */
+}
+
 /* ---------- intro: the command is typed, then rows print top to bottom ---------- */
 .p-cmd.typing::after { content: "▌"; margin-left: 1px; color: var(--c-oss); animation: caret 0.9s steps(1) infinite; }
 @keyframes caret { 50% { opacity: 0; } }
 .intro .row { opacity: 0; transform: translateY(-4px); }
 .intro .graph { clip-path: inset(0 0 100% 0); }
-.intro .show, .intro .hint { opacity: 0; }
+.intro .show, .intro .hint, .intro .console { opacity: 0; }
 .intro.printed .row { opacity: 1; transform: none; transition: opacity 0.2s ease, transform 0.2s ease; transition-delay: calc(var(--i) * 32ms); }
 .intro.printed .graph { clip-path: inset(0 0 0 0); transition: clip-path var(--print-ms) linear; }
-.intro.printed .show, .intro.printed .hint { opacity: 1; transition: opacity 0.35s ease var(--print-ms); }
+.intro.printed .show, .intro.printed .hint, .intro.printed .console { opacity: 1; transition: opacity 0.35s ease var(--print-ms); }
 
 /* ---------- small screens: git show becomes a bottom sheet ---------- */
 @media (max-width: 880px) {

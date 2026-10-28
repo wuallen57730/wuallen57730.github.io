@@ -134,6 +134,14 @@
       </header>
 
       <section class="view" id="log-view" aria-label="Experience as a git history">
+        <div class="console" id="console">
+          <div class="console-out" id="console-out" role="log" aria-live="polite" aria-label="Shell output"></div>
+          <label class="console-line">
+            <span class="c-ps1">lima@hkust:~/lima-wu <span class="c-branch">(main)</span> $</span>
+            <input id="console-in" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Type a command, for example help">
+          </label>
+          <div class="console-chips" id="console-chips" aria-label="Quick commands"></div>
+        </div>
         <div class="filters" id="filters" role="toolbar" aria-label="Filter by branch type"></div>
         <div class="log-layout">
           <div class="log" id="log"></div>
