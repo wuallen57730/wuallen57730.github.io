@@ -110,7 +110,7 @@
   // branch prefix per entry kind; edu and award commits live on main
   const SCOPE = { research: "research", work: "intern", oss: "oss", project: "project", other: "community" };
   // commit subjects use the "[Tag] message" style
-  const TAG = { edu: "Edu", award: "Award", research: "Research", work: "Intern", oss: "OSS", project: "Project", other: "Community" };
+  const TAG = { edu: "Edu", award: "Award", research: "Research", work: "Intern", oss: "Open Source", project: "Project", other: "Community" };
 
   function fnv(str) {
     let h = 0x811c9dc5;
