@@ -324,6 +324,18 @@ body.fancy .timeline-section { display: none; }
 .c-k { color: var(--c-work); }
 .c-hash { color: var(--c-project); }
 .c-ref { color: var(--c-oss); }
+.console mark { padding: 0 1px; background: color-mix(in srgb, var(--c-award) 35%, transparent); color: inherit; border-radius: 2px; }
+.c-link {
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--c-project);
+  font: inherit;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.c-link:hover { text-decoration-style: solid; }
 .console-line { display: flex; align-items: center; gap: 8px; padding: 6px 14px 10px; cursor: text; }
 .console-line .c-ps1 { flex-shrink: 0; }
 #console-in {

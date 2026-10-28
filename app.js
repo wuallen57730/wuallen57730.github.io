@@ -388,8 +388,9 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
   };
   const KIND_OF_SCOPE = Object.fromEntries(Object.entries(SCOPE).map(([kind, scope]) => [scope, kind]));
   const KIND_OF_TAG = Object.fromEntries(Object.entries(TAG).map(([kind, tag]) => [tag.toLowerCase(), kind]));
+  const REPO_URL = "https://github.com/wuallen57730/limaWU-website"; // this site's source, for git remote / git clone
 
-  function setupConsole({ history, prompt, log, select, applyFilter, applyBranch, setLogCmd }) {
+  function setupConsole({ history, prompt, log, select, applyFilter, applyBranch, applyMask, setLogCmd }) {
     const out = document.getElementById("console-out");
     const input = document.getElementById("console-in");
     const chips = document.getElementById("console-chips");
@@ -471,24 +472,130 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
       .map((b) => ({ name: b.name, note: b.entry.title, until: b.entry.ongoing ? "" : `, until ${isoOf(b.entry.end)}` }))
       .concat(commits.filter((c) => c.kind === "edu" && !c.entry.ongoing && c.entry.end > NOW).map((c) => ({ name: `edu/${c.entry.id}`, note: c.entry.title, until: `, until ${isoOf(c.entry.end)}` })))
       .filter((v, i, all) => all.findIndex((w) => w.name === v.name) === i);
+    const profileLinks = () => Object.fromEntries(
+      [...document.querySelectorAll("#content .profile .links a")].map((a) => [a.textContent.trim(), a.href])
+    );
+    const textOf = (html) => {
+      const div = document.createElement("div");
+      div.innerHTML = html;
+      return div.textContent.replace(/\s+/g, " ").trim();
+    };
+    const link = (url) => `<a href="${esc(url)}">${esc(url)}</a>`;
+
+    // "2025" or "2025-12" → month index; `end` gives the first month after the period
+    function parseWhen(value, end) {
+      const m = /^(\d{4})(?:-(\d{1,2}))?$/.exec(value);
+      if (!m) return null;
+      const year = Number(m[1]) * 12;
+      if (m[2]) return year + Number(m[2]) - 1 + (end ? 1 : 0);
+      return year + (end ? 12 : 0);
+    }
+
+    // case-insensitive match → escaped text with <mark>, trimmed to a window around the first hit
+    function highlight(text, needle, around = 70) {
+      const at = text.toLowerCase().indexOf(needle);
+      if (at === -1) return null;
+      const from = Math.max(0, at - around);
+      const to = Math.min(text.length, at + needle.length + around);
+      const snippet = text.slice(from, to);
+      const pattern = new RegExp(needle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi");
+      let html = "";
+      let last = 0;
+      for (const hit of snippet.matchAll(pattern)) {
+        html += esc(snippet.slice(last, hit.index)) + `<mark>${esc(hit[0])}</mark>`;
+        last = hit.index + hit[0].length;
+      }
+      html += esc(snippet.slice(last));
+      return `${from > 0 ? "…" : ""}${html}${to < text.length ? "…" : ""}`;
+    }
 
     // ----- git subcommands -----
     const GIT = {
       log(args) {
+        const opt = (name) => {
+          const a = args.find((x) => x.startsWith(`--${name}=`));
+          return a ? a.slice(name.length + 3).replace(/['"]/g, "") : null;
+        };
         const oneline = args.includes("--oneline");
         const branchArg = args.find((a) => branchByName(a));
-        const branchesArg = args.find((a) => a.startsWith("--branches="));
-        const grepArg = args.find((a) => a.startsWith("--grep="));
+        const branchesArg = opt("branches");
+        const grepArg = opt("grep");
+        const since = opt("since") ?? opt("after");
+        const until = opt("until") ?? opt("before");
+        const author = opt("author");
+
         let kind = "all";
-        if (branchesArg) kind = KIND_OF_SCOPE[branchesArg.slice(11).replace(/['"]/g, "").split("/")[0]] || "all";
-        if (grepArg) kind = KIND_OF_TAG[(grepArg.match(/\[(\w+)/) || [])[1]?.toLowerCase()] || "all";
-        const picked = commits.filter((c) => (branchArg ? branchOf(c) === branchArg : kind === "all" || c.kind === kind));
-        if (oneline) return picked.map((c) => line(`${hash(c)}${refsOf(c)} ${esc(c.subject)}`)).join("");
-        if (branchArg) applyBranch(branchArg);
+        if (branchesArg) kind = KIND_OF_SCOPE[branchesArg.split("/")[0]] || "all";
+        if (grepArg) kind = KIND_OF_TAG[((/\[(\w+)/.exec(grepArg) || /(\w+)/.exec(grepArg) || [])[1] || "").toLowerCase()] || "all";
+        const from = since ? parseWhen(since, false) : -Infinity;
+        const to = until ? parseWhen(until, true) : Infinity;
+        if (from === null || to === null) return line(`fatal: invalid date '${esc(from === null ? since : until)}' (use YYYY or YYYY-MM)`, "c-err");
+        const byLima = !author || /lima|wu|yu-?chen|吳禹辰/i.test(author);
+
+        const keep = (c) => byLima && c.t >= from && c.t < to &&
+          (branchArg ? branchOf(c) === branchArg : kind === "all" || c.kind === kind);
+        const picked = commits.filter(keep);
+        const authorNote = author
+          ? line(byLima ? "every commit here is by Lima WU. no co-authors yet." : `no commits by '${esc(author)}'. this repo has exactly one author.`, "c-dim")
+          : "";
+        if (oneline) return picked.map((c) => line(`${hash(c)}${refsOf(c)} ${esc(c.subject)}`)).join("") + authorNote;
+        if (!picked.length) return authorNote || line("no commits in that range.", "c-dim");
+
+        // keep the filter buttons in sync when the command is just a kind or a branch
+        if (since || until) applyMask(keep);
+        else if (branchArg) applyBranch(branchArg);
         else applyFilter(kind);
         setLogCmd(`git ${["log", ...args].join(" ")}`);
         scrollToLog();
-        return line(`showing ${picked.length} commit${picked.length === 1 ? "" : "s"} in the graph below ↓`, "c-dim");
+        return line(`showing ${picked.length} commit${picked.length === 1 ? "" : "s"} in the graph below ↓`, "c-dim") + authorNote;
+      },
+      grep(args) {
+        const term = args.filter((a) => !a.startsWith("-")).join(" ").replace(/^['"]|['"]$/g, "").trim();
+        if (!term) return line(`usage: git grep &lt;keyword&gt;   e.g. ${k("git grep Ray")} or ${k("git grep PyTorch")}`, "c-dim");
+        const needle = term.toLowerCase();
+        const blocks = [];
+        let count = 0;
+
+        // every experience once: its first commit, or the commit a data-commit bullet got
+        const seen = new Set();
+        for (const c of [...commits].sort((a, b) => a.t - b.t)) {
+          if (c.merge) continue;
+          const own = c.bullet != null;
+          if (!own && seen.has(c.entry.id)) continue;
+          if (!own) seen.add(c.entry.id);
+          const e = c.entry;
+          const fields = own
+            ? [["", textOf(e.bullets[c.bullet].html)]]
+            : [
+              ["title", e.title], ["role", textOf(e.meta)],
+              ...e.bullets.filter((b) => !b.commit).map((b) => ["", textOf(b.html)]),
+              ["tags", e.tags.join(", ")],
+            ];
+          const lines = fields.map(([label, text]) => {
+            const hit = text && highlight(text, needle);
+            return hit ? line(`    ${label ? `<span class="c-dim">${label}:</span> ` : "- "}${hit}`) : "";
+          }).filter(Boolean);
+          if (!lines.length) continue;
+          count += lines.length;
+          blocks.push(line(`<button type="button" class="c-link" data-row="${c.row}" title="git show ${c.sha.slice(0, 7)}">${c.sha.slice(0, 7)}</button> ${esc(c.subject)}`) + lines.join(""));
+        }
+        // the other "files" in the repo
+        for (const dt of document.querySelectorAll("#skills dt")) {
+          const hit = highlight(`${dt.textContent}: ${dt.nextElementSibling.textContent.replace(/\s+/g, " ").trim()}`, needle);
+          if (hit) {
+            blocks.push(line(`<span class="c-hash">skills.txt</span>:${hit}`));
+            count++;
+          }
+        }
+        for (const name of courseNames()) {
+          const hit = highlight(name, needle);
+          if (hit) {
+            blocks.push(line(`<span class="c-hash">coursework/</span>${hit}`));
+            count++;
+          }
+        }
+        if (!blocks.length) return line(`no matches for '${esc(term)}'. try ${k("git grep Ray")} or ${k("git grep LLM")}.`, "c-dim");
+        return blocks.join("") + line(`${count} match${count === 1 ? "" : "es"}. click a hash to open it.`, "c-dim");
       },
       show(args) {
         const ref = args.find((a) => !a.startsWith("-")) || "HEAD";
@@ -558,8 +665,52 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
       rebase: () => line("error: cannot rebase: these commits are already public (and on LinkedIn).", "c-err"),
       switch: (args) => GIT.checkout(args),
       help: () => COMMANDS.help(),
+      shortlog() {
+        const real = commits.filter((c) => !c.merge);
+        const counts = {};
+        for (const c of real) counts[TAG[c.kind]] = (counts[TAG[c.kind]] || 0) + 1;
+        const n = (v) => String(v).padStart(6);
+        return line(`${n(real.length)}  Lima WU`) +
+          line("grouped by tag:", "c-dim") +
+          Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([tag, v]) => line(`${n(v)}  ${k(`[${tag}]`)}`)).join("");
+      },
+      remote(args) {
+        const links = profileLinks();
+        const remotes = [["origin", REPO_URL], ["github", links.GitHub], ["linkedin", links.LinkedIn]].filter(([, url]) => url);
+        if (!args.includes("-v")) return remotes.map(([name]) => line(name)).join("");
+        return remotes
+          .flatMap(([name, url]) => (name === "origin" ? [[name, url, "fetch"], [name, url, "push"]] : [[name, url, "fetch"]]))
+          .map(([name, url, mode]) => line(`${name.padEnd(10)}${link(url)} (${mode})`))
+          .join("");
+      },
+      clone: () =>
+        line("Cloning into 'lima-wu'...") +
+        line("remote: the code is MIT licensed. the biography stays with its author.", "c-dim") +
+        line(`done. fork it here: ${link(REPO_URL)}`),
+      config(args) {
+        const h1 = document.querySelector("#content .profile h1");
+        const email = (document.querySelector('#content .profile a[href^="mailto:"]')?.getAttribute("href") || "").slice(7);
+        const values = {
+          "user.name": h1.firstChild.textContent.trim(),
+          "user.email": email,
+          "init.defaultbranch": "main",
+          "core.editor": "vim (in theory)",
+        };
+        if (args.includes("--list") || args.includes("-l")) return Object.entries(values).map(([key, v]) => line(`${key}=${esc(v)}`)).join("");
+        const words = args.filter((a) => !a.startsWith("-"));
+        if (!words.length) return line(`usage: git config &lt;key&gt;   e.g. ${k("git config user.name")} or ${k("git config --list")}`, "c-dim");
+        if (words.length > 1) return line("error: this config is read-only. it took years to set.", "c-err");
+        const v = values[words[0].toLowerCase()];
+        return v ? line(esc(v)) : line(`(${esc(words[0])} is not set)`, "c-dim");
+      },
+      init: () => line("Reinitialized existing Git repository in /home/lima/lima-wu/.git/"),
+      add: () => line("nothing new to add yet. check back after the next chapter.", "c-dim"),
+      revert: () => line("error: cannot revert: lessons learned don't come with an undo.", "c-err"),
+      "cherry-pick": () =>
+        line("error: no cherry-picking: the history only ships as a whole.", "c-err") +
+        line(`hint: you can still look at the good parts one at a time: ${k("git show <hash>")}`, "c-dim"),
     };
-    const GIT_SUBS = ["log", "show", "branch", "tag", "checkout", "switch", "status", "blame", "commit", "push"];
+    const GIT_SUBS = ["log", "show", "grep", "branch", "tag", "checkout", "switch", "status", "blame", "shortlog", "remote", "clone", "config", "commit", "push"];
 
     // ----- shell commands -----
     const COMMANDS = {
@@ -567,6 +718,8 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
         line("a tiny git shell over my history. try:", "c-dim") +
         [
           ["git log [--oneline]", "the history (--oneline prints it here)"],
+          ["git log --since=2025 --until=2025-12", "only one stretch of time"],
+          ["git grep <keyword>", "search everything, e.g. git grep Ray"],
           ["git show <hash|branch|tag>", "open one commit in the panel"],
           ["git branch [-v]", "every branch: one per role"],
           ["git tag [-n]", "every tag: one per award"],
@@ -687,6 +840,8 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
       if (parts.length === 1) pool = [...Object.keys(COMMANDS)];
       else if (parts[0] === "git" && parts.length === 2) pool = GIT_SUBS;
       else if (parts[0] === "git" && ["show", "checkout", "switch", "log"].includes(parts[1])) pool = refNames();
+      else if (parts[0] === "git" && parts[1] === "config") pool = ["user.name", "user.email", "--list"];
+      else if (parts[0] === "git" && parts[1] === "remote") pool = ["-v"];
       else if (parts[0] === "cat" || parts[0] === "ls") pool = cwd ? ["../README.md", "../skills.txt", ".."] : ["README.md", "skills.txt", "coursework/"];
       else if (parts[0] === "cd") pool = cwd ? ["..", "~"] : ["coursework/", "~"];
       else return;
@@ -737,7 +892,17 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
     document.querySelector(".prompt")?.addEventListener("click", () => input.focus());
 
     // quick commands for touch screens, so nobody has to summon a keyboard
-    const QUICK = ["help", "whoami", "git status", "git branch -v", "git tag -n", "git log --oneline", "git blame"];
+    const QUICK = ["help", "whoami", "git status", "git grep Ray", "git branch -v", "git tag -n", "git log --oneline", "git blame"];
+
+    // hashes printed by git grep open that commit, like typing git show
+    out.addEventListener("click", (ev) => {
+      const btn = ev.target.closest(".c-link[data-row]");
+      if (!btn) return;
+      const c = commits[Number(btn.dataset.row)];
+      select(c.row);
+      prompt.set(`git show ${c.sha.slice(0, 7)}`);
+      log.querySelector(`.row[data-row="${c.row}"]`).scrollIntoView({ block: "nearest", behavior: "smooth" });
+    });
     chips.innerHTML = QUICK.map((c) => `<button type="button" data-cmd="${c}">${c}</button>`).join("");
     chips.addEventListener("click", (ev) => {
       const btn = ev.target.closest("button");
@@ -843,6 +1008,17 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
         el.classList.toggle("dim", el.dataset.kind !== "main" && el.dataset.branch !== name);
       });
     }
+    // dim every commit that fails `keep` (git log --since/--until and combinations)
+    function applyMask(keep) {
+      prompt.branch("main");
+      filters.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", "false"));
+      const kept = new Set(history.commits.filter(keep).map((c) => c.row));
+      log.querySelectorAll(".row, .dot").forEach((el) => el.classList.toggle("dim", !kept.has(Number(el.dataset.row))));
+      log.querySelectorAll(".edge").forEach((el) => {
+        const b = el.dataset.branch;
+        el.classList.toggle("dim", b !== "main" && !history.commits.some((c) => kept.has(c.row) && branchOf(c) === b));
+      });
+    }
     filters.addEventListener("click", (ev) => {
       const btn = ev.target.closest("button");
       if (!btn) return;
@@ -857,6 +1033,7 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
       select: (row) => select(row, { announce: false }),
       applyFilter,
       applyBranch,
+      applyMask,
       setLogCmd: (cmd) => (logCmd = cmd),
     });
 
