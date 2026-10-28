@@ -132,12 +132,12 @@ body.fancy #content h2::before { content: "## "; color: var(--c-project); }
 .entry { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; }
 .entry > * { grid-column: 1 / -1; }
 .entry > h3 { grid-column: 1; }
-.entry > .when { grid-column: 2; grid-row: 1; margin: 0; align-self: baseline; white-space: nowrap; }
+.entry > .when { grid-column: 2; grid-row: 1; margin: 0; align-self: baseline; text-align: right; white-space: nowrap; }
 .entry > .meta { grid-column: 1; }
 .where { grid-column: 2; grid-row: 2; margin: 2px 0 6px; align-self: baseline; text-align: right; white-space: nowrap; font: 12px/1.5 var(--mono); color: var(--muted); }
 body:not(.fancy) .lede { max-width: none; }
 @media (max-width: 560px) {
-  .entry > .when { grid-column: 1; grid-row: auto; margin: 2px 0; }
+  .entry > .when { grid-column: 1; grid-row: auto; margin: 2px 0; text-align: left; }
   .entry > .where { grid-column: 1; grid-row: auto; margin-top: -4px; text-align: left; white-space: normal; }
 }
 
