@@ -305,6 +305,16 @@ body.fancy .timeline-section { display: none; }
 .d-add { color: var(--add); }
 .hint { margin: 10px 0 0; font: 12px/1.6 var(--mono); color: var(--muted); }
 
+/* ---------- intro: the command is typed, then rows print top to bottom ---------- */
+.p-cmd.typing::after { content: "▌"; margin-left: 1px; color: var(--c-oss); animation: caret 0.9s steps(1) infinite; }
+@keyframes caret { 50% { opacity: 0; } }
+.intro .row { opacity: 0; transform: translateY(-4px); }
+.intro .graph { clip-path: inset(0 0 100% 0); }
+.intro .show, .intro .hint { opacity: 0; }
+.intro.printed .row { opacity: 1; transform: none; transition: opacity 0.2s ease, transform 0.2s ease; transition-delay: calc(var(--i) * 32ms); }
+.intro.printed .graph { clip-path: inset(0 0 0 0); transition: clip-path var(--print-ms) linear; }
+.intro.printed .show, .intro.printed .hint { opacity: 1; transition: opacity 0.35s ease var(--print-ms); }
+
 /* ---------- small screens: git show becomes a bottom sheet ---------- */
 @media (max-width: 880px) {
   .log-layout { grid-template-columns: minmax(0, 1fr); }

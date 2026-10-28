@@ -83,7 +83,7 @@
 
   // ---------- chrome: theme + plain/fancy view ----------
 
-  function setupChrome() {
+  function setupChrome(onToggle) {
     const root = document.documentElement;
     document.getElementById("theme-toggle").addEventListener("click", () => {
       const dark = root.dataset.theme
@@ -103,8 +103,10 @@
       plain = !plain;
       store.set("view", plain ? "plain" : "fancy");
       apply();
+      onToggle(plain);
     });
     apply();
+    return plain;
   }
 
   // ---------- history model ----------
@@ -234,7 +236,7 @@
     log.innerHTML =
       `<svg class="graph" width="${width}" height="${commits.length * ROW}" aria-hidden="true">${svg}</svg>` +
       commits.map((c) => `
-        <button type="button" class="row" data-row="${c.row}" data-kind="${c.kind}">
+        <button type="button" class="row" data-row="${c.row}" data-kind="${c.kind}" style="--i: ${c.row}">
           <span class="hash">${c.sha.slice(0, 7)}</span>
           ${c.refs ? `<span class="refs">${c.refs.map((r) => `<span class="ref ${r.type}">${esc(r.name)}</span>`).join("")}</span>` : ""}
           <span class="subject${c.merge ? " is-merge" : ""}">${esc(c.subject)}</span>
@@ -278,6 +280,99 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
       ${diff}`;
   }
 
+  // ---------- prompt: the command in the top bar mirrors what the visitor does ----------
+
+  const LOG_ALL = "git log --graph --all --decorate";
+
+  // the real git command that would show what a filter shows
+  function filterCommand(kind) {
+    if (kind === "all") return LOG_ALL;
+    if (kind === "award" || kind === "edu") return `git log --first-parent main --grep='\\[${TAG[kind]}\\]'`;
+    return `git log --graph --decorate --branches='${SCOPE[kind]}/*'`;
+  }
+
+  function createPrompt() {
+    const cmd = document.querySelector(".p-cmd");
+    const branch = document.querySelector(".p-branch");
+    let timer = 0;
+    let target = cmd.textContent;
+
+    // show the full command now and stop the caret
+    const settle = () => {
+      clearTimeout(timer);
+      cmd.textContent = target;
+      cmd.classList.remove("typing");
+    };
+    // type `text` one character at a time, then call `then` (by default: settle)
+    const type = (text, { delay = 0, min = 6, jitter = 10, then = settle } = {}) => {
+      clearTimeout(timer);
+      target = text;
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        settle();
+        return;
+      }
+      let n = 0;
+      cmd.textContent = "";
+      cmd.classList.add("typing");
+      const tick = () => {
+        cmd.textContent = text.slice(0, ++n);
+        if (n < text.length) timer = setTimeout(tick, min + Math.random() * jitter);
+        else then();
+      };
+      timer = setTimeout(tick, delay);
+    };
+    return {
+      type,
+      settle,
+      set(text) {
+        target = text;
+        settle();
+      },
+      get text() {
+        return target;
+      },
+      branch(name) {
+        branch.textContent = `(${name})`;
+      },
+    };
+  }
+
+  // ---------- intro: type the command, then print the log line by line ----------
+
+  const ROW_MS = 32; // delay between printed rows; keep in sync with .intro.printed .row in CSS
+
+  function playIntro(view, rowCount, prompt) {
+    if (!document.body.classList.contains("fancy")) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let timer = 0;
+    view.style.setProperty("--print-ms", `${rowCount * ROW_MS}ms`);
+    view.classList.add("intro");
+
+    const cleanup = () => {
+      window.removeEventListener("keydown", skip);
+      window.removeEventListener("pointerdown", skip);
+    };
+    const done = () => view.classList.remove("intro", "printed");
+    // "press Enter": stop the caret and let the CSS print the rows one by one
+    const print = () => {
+      cleanup();
+      prompt.settle();
+      view.classList.add("printed");
+      timer = setTimeout(done, rowCount * ROW_MS + 600);
+    };
+    // any key or click shows everything at once
+    function skip() {
+      clearTimeout(timer);
+      cleanup();
+      prompt.settle();
+      done();
+    }
+    window.addEventListener("keydown", skip);
+    window.addEventListener("pointerdown", skip);
+    prompt.type(prompt.text, { delay: 250, min: 14, jitter: 26, then: () => (timer = setTimeout(print, 250)) });
+  }
+
   // ---------- interaction ----------
 
   const FILTERS = [
@@ -286,7 +381,13 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
   ];
 
   function init() {
-    setupChrome();
+    const prompt = createPrompt();
+    let logCmd = LOG_ALL; // last log command, restored when leaving plain view
+    const startPlain = setupChrome((plain) => {
+      prompt.branch("main");
+      prompt.type(plain ? "cat README.md" : logCmd);
+    });
+    if (startPlain) prompt.set("cat README.md");
     setupToc();
 
     const history = buildHistory(readEntries());
@@ -299,8 +400,13 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
     const dots = [...log.querySelectorAll(".dot")];
     let current = -1;
 
-    function select(i, { focus = false, open = true } = {}) {
+    function select(i, { focus = false, open = true, announce = true } = {}) {
       i = Math.max(0, Math.min(rows.length - 1, i));
+      if (announce) {
+        const c = history.commits[i];
+        prompt.branch(c.branch ? c.branch.name : "main");
+        prompt.type(`git show ${c.sha.slice(0, 7)}`);
+      }
       if (current >= 0) {
         rows[current].classList.remove("selected");
         dots[current].classList.remove("selected");
@@ -345,13 +451,17 @@ ${e.tags.map((t) => `<span class="d-add">+${esc(t)}</span>`).join("\n")}</pre>`
       const btn = ev.target.closest("button");
       if (!btn) return;
       const f = btn.dataset.filter;
+      logCmd = filterCommand(f);
+      prompt.branch("main");
+      prompt.type(logCmd);
       filters.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
       log.querySelectorAll("[data-kind]").forEach((el) => {
         el.classList.toggle("dim", f !== "all" && el.dataset.kind !== "main" && el.dataset.kind !== f);
       });
     });
 
-    select(0, { open: false });
+    select(0, { open: false, announce: false });
+    playIntro(document.getElementById("log-view"), rows.length, prompt);
   }
 
   init();
