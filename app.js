@@ -109,6 +109,8 @@
 
   // branch prefix per entry kind; edu and award commits live on main
   const SCOPE = { research: "research", work: "intern", oss: "oss", project: "project", other: "community" };
+  // commit subjects use the "[Tag] message" style
+  const TAG = { edu: "Edu", award: "Award", research: "Research", work: "Intern", oss: "OSS", project: "Project", other: "Community" };
 
   function fnv(str) {
     let h = 0x811c9dc5;
@@ -132,16 +134,16 @@
 
     for (const e of entries) {
       if (e.kind === "edu") {
-        add({ key: `${e.id}:start`, t: e.start + 0.5, kind: "edu", entry: e, subject: `edu: enroll at ${abbrev(e.title)}` });
+        add({ key: `${e.id}:start`, t: e.start + 0.5, kind: "edu", entry: e, subject: `[${TAG.edu}] enroll at ${abbrev(e.title)}` });
         if (!e.ongoing && e.end <= NOW) {
-          add({ key: `${e.id}:end`, t: e.end + 0.5, kind: "edu", entry: e, subject: `edu: graduate from ${abbrev(e.title)}` });
+          add({ key: `${e.id}:end`, t: e.end + 0.5, kind: "edu", entry: e, subject: `[${TAG.edu}] graduate from ${abbrev(e.title)}` });
         }
         continue;
       }
       if (e.kind === "award") {
         add({
           key: e.id, t: e.start + 0.6, kind: "award", entry: e,
-          subject: `award: ${e.title}`, refs: [{ type: "tag", name: `tag: ${e.id}` }],
+          subject: `[${TAG.award}] ${e.title}`, refs: [{ type: "tag", name: `tag: ${e.id}` }],
         });
         continue;
       }
@@ -152,7 +154,7 @@
       const b = { name, kind: e.kind, entry: e, commits: [] };
       branches.push(b);
 
-      b.commits.push(add({ key: `${name}:0`, t: e.start + 0.05, kind: e.kind, branch: b, entry: e, subject: `${e.id}: ${e.title}` }));
+      b.commits.push(add({ key: `${name}:0`, t: e.start + 0.05, kind: e.kind, branch: b, entry: e, subject: `[${TAG[e.kind]}] ${e.title}` }));
       if (merged) {
         b.merge = add({ key: `${name}:merge`, t: e.end + 0.95, kind: e.kind, merge: b, entry: e, subject: `Merge branch '${name}'` });
       } else {

@@ -35,7 +35,7 @@ Add or change an `<article class="entry">` in `index.html`:
 
 - `data-kind`: `research`, `oss`, `work`, `edu`, `award`, `project` or `other`.
 - One `<time>` is a point in time; two are a start and end; `data-ongoing` means "Present".
-- The commit subject is `<data-id>: <title>`; the full entry appears in `git show`.
+- Commit subjects use the `[Tag] message` style, e.g. `[Research] Agentic RL on AReaL 2.0` or `[Award] …`; the full entry appears in `git show`.
 
 ## Preview
 
