@@ -161,10 +161,11 @@
           <ul>
             <li data-short="integrate executable-world agent into AReaL">
               Integrated a Code-as-World-style executable-world discovery agent
-              into AReaL 2.0's agent-service architecture (external-model, online
-              mode). An LLM writes a physical world specification, which is
-              compiled to MuJoCo, simulated, and checked against observations,
-              with up to 5 rounds of residual feedback to revise it.
+              into AReaL 2.0, first for external-model online collection and then
+              as an inline agent for local-model RL training. An LLM writes a
+              physical world specification, which is compiled to MuJoCo,
+              simulated, and checked against observations, with up to 5 rounds of
+              residual feedback to revise it.
             </li>
             <li data-short="rollout driver + parity check (7% → 37%)">
               Built the rollout driver, the session/reward interface (binary
@@ -174,13 +175,31 @@
               multi-turn revision raised task success from <strong>7%</strong>
               to <strong>37%</strong>.
             </li>
+            <li data-short="GRPO on Qwen3-4B: 76% → 91% success">
+              Trained Qwen3-4B with GRPO on 3 GPUs. After 36 steps, success on
+              validation tasks rose from <strong>76%</strong> to
+              <strong>91%</strong>, and first-try success from
+              <strong>23%</strong> to <strong>61%</strong>.
+            </li>
+            <li data-short="debug SDPA, FSDP weight sync, OOM">
+              Debugged the training stack end to end, including silent
+              contamination between packed sequences under SDPA, a shard-offset
+              error in FSDP weight sync, and out-of-memory failures. Ran a
+              controlled experiment on how to score over-long conversations.
+            </li>
+            <li data-short="task set: 7 physical families, 400 tasks">
+              Extended the task set to <strong>7</strong> physical families
+              (<strong>400</strong> tasks), adding rolling, bounce, momentum
+              transfer, oblique collision and ramps, with rotation observations
+              and restitution in MuJoCo.
+            </li>
             <li data-short="docs: Ray scheduler support (#1567)">
               Clarified Ray scheduler support in the agent workflow compatibility
               notes (<a href="https://github.com/areal-project/AReaL/pull/1567">#1567</a>).
               See <a href="https://github.com/areal-project/AReaL/pulls?q=is%3Apr+author%3Awuallen57730">my contributions</a>.
             </li>
           </ul>
-          <p class="tags">MuJoCo, Ray, Qwen3-Coder</p>
+          <p class="tags">MuJoCo, GRPO, Ray, SGLang, Qwen3</p>
         </article>
 
         <article class="entry" data-id="so-arm" data-kind="research">
